@@ -1,0 +1,39 @@
+User Roles -
+1) Customer  --                          Reg, CNMP, UMP
+2) Customer/Relationship Manager  --     CMP
+3) Company Admin
+4) Billing Operator                      UMP
+5) Employees of the Operator		AMP
+
+
+Pages - Customer
+1) Login/Registration page --> Role driven based on the resistration id
+2) Landing Page --> Avlbl tarrifs, Subscriptions, Usage
+
+Employee
+
+3) HR - CRUD on Employee table --> Emp created, edit, delete, select
+4) RM -
+5) Company Admin  --> Add Tarrifs
+6) Billing
+
+
+TECH STACK -
+
+1) DB - SQLite (SQL based rdbms)
+2) Backend - Flask
+3) UI - HTML, CSS, JS, Bootstrap
+
+TEAM 
+
+1) DBMS - Digaant (Employee Schema), Anubhav, Souvik, Shubham
+2) Backend - Pranit, Rishi, Shubham 
+3) Frontend - Bhanu, Ajeet, Shubham
+
+
+30th --
+1) Go through flask app - https://github.com/midhun1998/BankIt-App; 
+2) Git Basics
+3) Git repo 
+
+

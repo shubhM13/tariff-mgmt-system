@@ -1,9 +1,10 @@
-CREATE TABLE login ( 
+CREATE TABLE user ( 
 	uid VARCHAR(5) NOT NULL,
 	pswd VARCHAR(45) NOT NULL,
 	datetime DATETIME NOT NULL,
-	role INTEGER NOT NULL,
-	PRIMARY KEY (uid) );
+	role_id INTEGER NOT NULL,
+	PRIMARY KEY (uid) 
+	);
 	
 CREATE TABLE customer (
 	cid VARCHAR(5) NOT NULL, 
@@ -46,14 +47,13 @@ CREATE TABLE employee (
 	eid VARCHAR(5) NOT NULL, 
 	first_name VARCHAR(25) NOT NULL,
 	last_name VARCHAR(25) NOT NULL, 
-	department VARCHAR(50) NOT NULL, 
-	designation VARCHAR(50) NOT NULL ,
+	role_id INTEGER NOT NULL,
 	email VARCHAR(50) NOT NULL, 
 	contact VARCHAR(10) NOT NULL,
 	PRIMARY KEY (eid) 
 	);
 
-CREATE TABLE roles(
+CREATE TABLE role(
 	rid INTEGER NOT NULL,
 	role VARCHAR(50) NOT NULL,
 	PRIMARY KEY(rid)

@@ -1,0 +1,1 @@
+-- Insert, Update and Delete Queries here

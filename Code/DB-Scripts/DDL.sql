@@ -21,8 +21,8 @@ CREATE TABLE customer (
 CREATE TABLE tarrif_plan (
 	pid VARCHAR(5) NOT NULL,
 	name VARCHAR(50) NOT NULL,
-	type INTEGER NOT NULL CHECK(type IN(0,1)),
-	tarrif REAL NOT NULL,
+	tarrif_call REAL NOT NULL,
+	tarrif_data REAL NOT NULL,
 	validity INTEGER NOT NULL,
 	rental REAL,
 	PRIMARY KEY (pid)
@@ -37,7 +37,8 @@ CREATE TABLE subscription (
 
 CREATE TABLE usage (
 	sid VARCHAR(10) NOT NULL,
-	utilization INTEGER NOT NULL,
+	voice INTEGER NOT NULL,
+	data INTEGER NOT NULL,
 	datetime DATETIME NOT NULL
 	);
 

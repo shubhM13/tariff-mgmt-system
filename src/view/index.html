@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Login & Signup Form | CodingMaker</title>
+    <h1 class = "heading-class">Dispur Wireless</h1>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+  <body>
+    <div class="wrapper-class">
+      <div class="title-text">
+        <div class="title-class">Login Form</div>
+        <div class="title-class">Signup Form</div>
+      </div>
+      <div class="form-container">
+        <div class="slide-controls">
+          <input type="radio" name="slide" id="login" checked>
+          <input type="radio" name="slide" id="signup">
+          <label for="login" class="slide login">Login</label>    <!--This class name couldn't be changed in the CSS file--> 
+          <label for="signup" class="slide signup">Signup</label>
+          <div class="slider-tab"></div>
+        </div>
+        <div class="form-inner">
+          <form action="#" class="login">
+            <div class="field-class">
+              <input type="text" placeholder="Registration ID" required id = "id-input">
+            </div>
+            <div class="field-class">
+              <input type="password" placeholder="Password" required id = "password-input">
+            </div>
+            <div class="pass-link"><a href="#">Forgot password?</a></div>
+            <div class="field btn">
+              <div class="btn-layer"></div>
+              <input type="submit" value="Login" id= "login-btn">
+            </div>
+            <div class="signup-link">Not a member? <a href="">Signup now</a></div>
+          </form>
+          <form action="#" class="signup">
+            <div class="field-class">
+                <input type="text" placeholder="First Name*" required id = "fname-input">
+              </div>
+            <div class="field-class">
+              <input type="text" placeholder="Last Name*" required id = "lname-input">
+            </div>
+            <div class="field-class">
+              <input type="text" placeholder="Contact Number*" id = "contact-input">
+            </div>
+            
+            <div class="field-class">
+              <input type="text" placeholder="Alternate Contact Number" id = "altcontact-input">
+            </div>
+            <div class="field-class">
+              <input type="text" placeholder="Email Address*" required id = "email-input">
+            </div>
+            <div class="field-class">
+              <input type="text" placeholder="Address*" required id = "address-input">
+            </div>
+            
+            <div class="field-class">
+              <input type="text" placeholder="City*" required id = "city-input">
+            </div>
+
+            
+            <div class="field-class">
+              <input type="text" placeholder="State*" required id = "state-input">
+            </div>
+
+            
+            <div class="field-class">
+              <input type="text" placeholder="Pincode*" required id = "pincode-input">
+            </div>
+            
+            <br>
+            
+            <div class="field btn">                <!--This class couldn't be changed in the CSS file--> 
+              <div class="btn-layer"></div>
+              <input type="submit" value="Register" id = "register-btn">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const loginText = document.querySelector(".title-text .login");
+      const loginForm = document.querySelector("form.login");
+      const loginBtn = document.querySelector("label.login");
+      const signupBtn = document.querySelector("label.signup");
+      const signupLink = document.querySelector("form .signup-link a");
+      signupBtn.onclick = (()=>{
+        loginForm.style.marginLeft = "-50%";
+        loginText.style.marginLeft = "-50%";
+      });
+      loginBtn.onclick = (()=>{
+        loginForm.style.marginLeft = "0%";
+        loginText.style.marginLeft = "0%";
+      });
+      signupLink.onclick = (()=>{
+        signupBtn.click();
+        return false;
+      });
+    </script>
+
+
+
+  </body>
+</html>

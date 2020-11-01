@@ -1,0 +1,1 @@
+Use asset folder for images, fornts media etc..

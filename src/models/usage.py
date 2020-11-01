@@ -6,7 +6,6 @@ from db.scripts import DML,DQL
 
 db_path = './db/dispur_wireless.db'
 
-
 class UsageModel():
 
     def __init__(self, sid, voice, data, datetime):
@@ -15,7 +14,6 @@ class UsageModel():
         self.data = data
         self.datetime = datetime
                      
-    
     #1) Select one
     @classmethod
     def find_by_id(cls, sid):

@@ -1,11 +1,9 @@
 import sqlite3 as db
-import time
 import traceback
 import sys
 from db.scripts import DML,DQL
 
 db_path = './db/dispur_wireless.db'
-
 
 class SubscriptionModel():
 
@@ -13,8 +11,7 @@ class SubscriptionModel():
         self.sid = sid
         self. cid = cid
         self.pid = pid
-       
-    
+          
     #1) Select one
     @classmethod
     def find_by_id(cls, sid):

@@ -8,11 +8,11 @@ db_path = './db/dispur_wireless.db'
 
 class UserModel():
 
-    def __init__(self, uid, pswd, datetime, role):
+    def __init__(self, uid, pswd, datetime, role_id):
         self.uid = uid
         self. pswd = pswd
         self.datetime = datetime
-        self.role = role
+        self.role_id = role_id
     
     #1) Select one
     @classmethod
@@ -45,13 +45,13 @@ class UserModel():
 
     #3) Insert
     @classmethod
-    def insert_into_table(cls, uid, pswd, role):
+    def insert_into_table(cls, uid, pswd, role_id):
         datetime = time.strftime('%Y-%m-%d %H:%M:%S')  # sql datetime format
         connection = db.connect(db_path)
         cursor = connection.cursor()
         query = DML.insert_user
         try:
-            result = cursor.execute(query, (uid, pswd, datetime, role))
+            result = cursor.execute(query, (uid, pswd, datetime, role_id))
             connection.commit()
             connection.close()
             return True
@@ -66,13 +66,13 @@ class UserModel():
 
     #4) Update
     @classmethod
-    def update_user(cls, uid, pswd, role):
+    def update_user(cls, uid, pswd, role_id):
         datetime = time.strftime('%Y-%m-%d %H:%M:%S')  # sql datetime format
         connection = db.connect(db_path)
         cursor = connection.cursor()
         query = DML.update_user_by_id
         try:
-            result = cursor.execute(query, (pswd, datetime, role, uid))
+            result = cursor.execute(query, (pswd, datetime, role_id, uid))
             connection.commit()
             connection.close()
             return True
@@ -110,7 +110,7 @@ class UserModel():
             'id': self.uid,
             'password': self.pswd,
             'lastUpdated': self.datetime,
-            'roleID': self.role
+            'roleID': self.role_id
         }
 
 

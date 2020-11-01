@@ -6,8 +6,7 @@ from db.scripts import DML,DQL
 
 db_path = './db/dispur_wireless.db'
 
-
-class TarrifPlanModel():
+class PlanModel():
 
     def __init__(self, pid, name, tarrif_call, tarrif_data, validity, rental):
         self.pid = pid
@@ -17,7 +16,6 @@ class TarrifPlanModel():
         self.validity = validity
         self.rental = rental
        
-    
     #1) Select one
     @classmethod
     def find_by_id(cls, pid):
@@ -28,7 +26,7 @@ class TarrifPlanModel():
         rows = result.fetchall()
         if rows:
             for row in rows:
-                tarrifPlan = TarrifPlanModel(row[0], row[1], row[2], row[3], row[4], row[5])
+                tarrifPlan = PlanModel(row[0], row[1], row[2], row[3], row[4], row[5])
             connection.close()
             return tarrifPlan
 
@@ -43,7 +41,7 @@ class TarrifPlanModel():
         rows = result.fetchall()
         if rows:
             for row in rows:
-                tarrifPlans.append(TarrifPlanModel(row[0], row[1], row[2], row[3], row[4], row[5]))
+                tarrifPlans.append(PlanModel(row[0], row[1], row[2], row[3], row[4], row[5]))
             return tarrifPlans
         connection.close()
 

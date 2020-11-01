@@ -1,5 +1,4 @@
 import sqlite3 as db
-import time
 import traceback
 import sys
 from db.scripts import DML,DQL
@@ -60,8 +59,6 @@ class RoleModel():
             print(traceback.format_exception(exc_type, exc_value, exc_tb))
             connection.close()
             return False
-
-    
 
     #4) Delete
     @classmethod

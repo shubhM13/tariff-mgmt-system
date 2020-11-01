@@ -63,6 +63,27 @@ class SubscriptionModel():
             print(traceback.format_exception(exc_type, exc_value, exc_tb))
             connection.close()
             return False
+    
+    #4) Update
+    @classmethod
+    def update_subscription(cls, sid, cid, pid):
+        connection = db.connect(db_path)
+        cursor = connection.cursor()
+        query = DML.update_subs_by_id
+        try:
+            result = cursor.execute(query, (sid, cid, pid))
+            connection.commit()
+            connection.close()
+            return True
+        except db.Error as er:
+            print('SQLite error: %s' % (' '.join(er.args)))
+            print("Exception class is: ", er.__class__)
+            print('SQLite traceback: ')
+            exc_type, exc_value, exc_tb = sys.exc_info()
+            print(traceback.format_exception(exc_type, exc_value, exc_tb))
+            connection.close()
+            return False
+
 
     #5) Delete
     @classmethod

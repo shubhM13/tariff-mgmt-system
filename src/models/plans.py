@@ -111,7 +111,7 @@ class TarrifPlanModel():
         return{
             'planID': self.pid,
             'planName': self.name,
-            'calltarrif': self.tarrif_call,
+            'callTarrif': self.tarrif_call,
             'dataTarrif': self.tarrif_data,
             'validity': self.validity,
             'rental': self.rental

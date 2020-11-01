@@ -37,3 +37,4 @@ delete_plan_by_id = "DELETE FROM tarrif_plan WHERE pid=?"
 insert_usage = "INSERT INTO usage VALUES (?,?,?,?)"
 update_usage_by_id = "UPDATE usage SET voice=?,data=?,datetime=? WHERE sid=?"
 delete_usage_by_id = "DELETE FROM usage WHERE sid=?"
+

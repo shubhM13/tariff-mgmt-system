@@ -1,15 +1,39 @@
-# Insert, Update and Delete queries here
-
 # 1) User table
-insert_user = "TODO"
-update_user_by_id = "TODO"
-delete_user_by_id = "TODO"
+insert_user = "INSERT INTO user VALUES (?,?,?,?)"
+update_user_by_id = "UPDATE user SET pswd=?, datetime=?, role_id=? WHERE uid=?"
+delete_user_by_id = "DELETE FROM user WHERE uid=?"
 
-# 2) Subscription table
-insert_subscription = "TODO"
-delete_subscription_by_id = "TODO"
 
-# 3) Tarrif Plan Table
-insert_tarrifPlan = "TODO"
-delete_tarrifPlan_by_id = "TODO"
-update_tarrifPlan_by_id = "TODO"
+# 2) Customer table
+insert_cust = "INSERT INTO customer VALUES (?,?,?,?,?,?,?,?,?)"
+update_cust_by_id = "UPDATE customer SET first_name=?,last_name=?,address=?,city=?,state=?,pincode=?,email=?,contact=? WHERE cid=?"
+delete_cust_by_id = "DELETE FROM customer WHERE cid=?"
+
+
+# 3) Employee table
+insert_emp = "INSERT INTO employee VALUES (?,?,?,?,?,?)"
+update_emp_by_id = "UPDATE employee SET first_name=?,last_name=?,role_id=?,email=?,contact=? WHERE eid=?"
+delete_emp_by_id = "DELETE FROM employee WHERE eid=?"
+
+
+# 4) Role table
+insert_role = "INSERT INTO role VALUES (?,?)"
+delete_role_by_id = "DELETE FROM role WHERE rid=?"
+
+
+# 5) Subscription table
+insert_subs = "INSERT INTO subscription VALUES (?,?,?)"
+update_subs_by_id = "UPDATE subscription SET cid=?, pid=? WHERE sid=?"
+delete_subs_by_id = "DELETE FROM subscription WHERE sid=?"
+
+
+# 6) Tarrif_Plan table
+insert_plan = "INSERT INTO tarrif_plan VALUES (?,?,?,?,?,?)"
+update_plan_by_id = "UPDATE tarrif_plan SET name=?,tarrif_call=?,tarrif_data=?,validity=?,rental=? WHERE pid=?"
+delete_plan_by_id = "DELETE FROM tarrif_plan WHERE pid=?"
+
+
+# 7) Usage table
+insert_usage = "INSERT INTO usage VALUES (?,?,?,?)"
+update_usage_by_id = "UPDATE usage SET voice=?,data=?,datetime=? WHERE sid=?"
+delete_usage_by_id = "DELETE FROM usage WHERE sid=?"

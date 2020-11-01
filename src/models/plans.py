@@ -23,7 +23,7 @@ class TarrifPlanModel():
     def find_by_id(cls, pid):
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DQL.select_tarrifPlan_by_id
+        query = DQL.select_plan_by_id
         result = cursor.execute(query, (pid,))
         rows = result.fetchall()
         if rows:
@@ -38,7 +38,7 @@ class TarrifPlanModel():
         tarrifPlans = list()
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DQL.select_all_tarrifPlans
+        query = DQL.select_all_plan
         result = cursor.execute(query)
         rows = result.fetchall()
         if rows:
@@ -52,7 +52,7 @@ class TarrifPlanModel():
     def insert_into_table(cls, pid, name, tarrif_call, tarrif_data, validity, rental):
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DML.insert_tarrifPlan
+        query = DML.insert_plan
         try:
             result = cursor.execute(query, (pid, name, tarrif_call, tarrif_data, validity, rental))
             connection.commit()
@@ -69,10 +69,10 @@ class TarrifPlanModel():
 
     #4) Delete
     @classmethod
-    def delete_(self, pid):
+    def delete_plan(self, pid):
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DML.delete_tarrifPlan_by_id
+        query = DML.delete_plan_by_id
         try:
             result = cursor.execute(query, (pid,))
             connection.commit()
@@ -88,10 +88,10 @@ class TarrifPlanModel():
     
     #5) Update
     @classmethod
-    def update_user(cls, pid, name, tarrif_call, tarrif_data, validity, rental):
+    def update_plan(cls, pid, name, tarrif_call, tarrif_data, validity, rental):
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DML.update_tarrifPlan_by_id
+        query = DML.update_plan_by_id
         try:
             result = cursor.execute(query, (pid, name, tarrif_call, tarrif_data, validity, rental))
             connection.commit()

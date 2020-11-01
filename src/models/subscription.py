@@ -20,7 +20,7 @@ class SubscriptionModel():
     def find_by_id(cls, sid):
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DQL.select_subscription_by_id
+        query = DQL.select_subs_by_id
         result = cursor.execute(query, (sid,))
         rows = result.fetchall()
         if rows:
@@ -35,7 +35,7 @@ class SubscriptionModel():
         subscriptions = list()
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DQL.select_all_subscriptions
+        query = DQL.select_all_subs
         result = cursor.execute(query)
         rows = result.fetchall()
         if rows:
@@ -49,7 +49,7 @@ class SubscriptionModel():
     def insert_into_table(cls, sid, cid, pid):
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DML.insert_subscription
+        query = DML.insert_subs
         try:
             result = cursor.execute(query, (sid, cid, pid))
             connection.commit()
@@ -69,7 +69,7 @@ class SubscriptionModel():
     def delete_subscription(self, sid):
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DML.delete_subscription_by_id
+        query = DML.delete_subs_by_id
         try:
             result = cursor.execute(query, (sid,))
             connection.commit()

@@ -6,7 +6,6 @@ from db.scripts import DML,DQL
 
 db_path = './db/dispur_wireless.db'
 
-
 class UserModel():
 
     def __init__(self, uid, pswd, datetime, role):

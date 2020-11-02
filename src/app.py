@@ -9,7 +9,6 @@ from resources.employee import Employee, EmployeeList, EmployeeRegister, Employe
 from resources.plan import Plan, PlanList, PlanRegister
 from resources.role import Role, RoleList
 
-
 app = Flask(__name__)
 api = Api(app)
 app.secret_key = 'test'

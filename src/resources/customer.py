@@ -2,7 +2,7 @@ from models.customer import CustomerModel
 from models.user import UserModel
 from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
-import id_generator
+from resources import id_generator
 
 class Customer(Resource):
 

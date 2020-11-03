@@ -45,6 +45,6 @@ select_usage_details_by_sid = "SELECT * FROM [subscriptions_by_customer] where s
 select_usage_details_by_cid = "SELECT * FROM [subscriptions_by_customer] where cid=?"
 
 # 10) VIEW: [bill_details_per_sub]subscription details  - for operator
-select_all_usage_details = "SELECT * FROM [bill_details_per_sub]"
-select_usage_details_by_sid = "SELECT * FROM [bill_details_per_sub] where sid=?"
-select_usage_details_by_cid = "SELECT * FROM [bill_details_per_sub] where cid=?"
+select_all_subs_details = "SELECT * FROM [bill_details_per_sub]"
+select_subs_details_by_sid = "SELECT * FROM [bill_details_per_sub] where sid=?"
+select_subs_details_by_cid = "SELECT * FROM [bill_details_per_sub] where cid=?"

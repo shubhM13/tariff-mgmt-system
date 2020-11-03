@@ -22,9 +22,11 @@ delete_role_by_id = "DELETE FROM role WHERE rid=?"
 
 
 # 5) Subscription table
-insert_subs = "INSERT INTO subscription VALUES (?,?,?)"
-update_subs_by_id = "UPDATE subscription SET cid=?, pid=? WHERE sid=?"
+insert_subs = "INSERT INTO subscription VALUES (?,?,?,?,?)"
+update_subs_by_id = "UPDATE subscription SET cid=?, pid=?, subs_date=?, last_billed=? WHERE sid=?"
+update_last_billed_date = "UPDATE subscription SET last_billed=? WHERE sid=?"
 delete_subs_by_id = "DELETE FROM subscription WHERE sid=?"
+
 
 
 # 6) Tarrif_Plan table
@@ -38,3 +40,23 @@ insert_usage = "INSERT INTO usage VALUES (?,?,?,?)"
 update_usage_by_id = "UPDATE usage SET voice=?,data=?,datetime=? WHERE sid=?"
 delete_usage_by_id = "DELETE FROM usage WHERE sid=?"
 
+# 8) Bill table
+insert_bill_by_sid = "INSERT INTO customer_bill VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+update_bill_by_sid = """UPDATE customer_bill
+                          SET cid = ?
+                              ,pid = ?
+                              ,name = ?
+                              ,tarrif_call = ?
+                              ,tarrif_data = ?
+                              ,validity = ?
+                              ,rental = ?
+                              ,subs_date = ?
+                              ,last_billed = ?
+                              ,voice_usage = ?
+                              ,data_usage = ?
+                              ,call_cost = ?
+                              ,data_cost = ?
+                              ,total_cost = ?
+                              ,billing_cycle = ?
+                          WHERE sid = ?"""
+delete_bill_by_sid = "DELETE FROM customer_bill WHERE sid=?"

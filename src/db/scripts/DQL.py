@@ -33,3 +33,18 @@ select_all_plan = "SELECT * FROM tarrif_plan"
 # 7) usage table
 select_usage_by_id = "SELECT * FROM usage WHERE sid=?"
 select_all_usage="SELECT * FROM usage"
+
+# 8) customer_bill table
+select_bill_by_sid = "SELECT * FROM customer_bill WHERE sid=?"
+select_bill_by_cid = "SELECT * FROM customer_bill WEHERE cid=?"
+total_bill_cost_for_cid = "SELECT SUM(total_cost) FROM customer_bill WHERE cid=?"
+
+# 9) VIEW : [subscription_by_customer] usage details - for customer
+select_all_usage_details = "SELECT * FROM [subscriptions_by_customer]"
+select_usage_details_by_sid = "SELECT * FROM [subscriptions_by_customer] where sid=?"
+select_usage_details_by_cid = "SELECT * FROM [subscriptions_by_customer] where cid=?"
+
+# 10) VIEW: [bill_details_per_sub]subscription details  - for operator
+select_all_usage_details = "SELECT * FROM [bill_details_per_sub]"
+select_usage_details_by_sid = "SELECT * FROM [bill_details_per_sub] where sid=?"
+select_usage_details_by_cid = "SELECT * FROM [bill_details_per_sub] where cid=?"

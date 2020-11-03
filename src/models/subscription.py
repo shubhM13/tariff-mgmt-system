@@ -1,3 +1,4 @@
+# Todo Digaant
 import sqlite3 as db
 import traceback
 import sys
@@ -19,6 +20,19 @@ class SubscriptionModel():
         cursor = connection.cursor()
         query = DQL.select_subs_by_id
         result = cursor.execute(query, (sid,))
+        rows = result.fetchall()
+        if rows:
+            for row in rows:
+                subscription = SubscriptionModel(row[0], row[1], row[2])
+            connection.close()
+            return subscription
+
+    @classmethod
+    def find_subs_by_uid(cls, cid):
+        connection = db.connect(db_path)
+        cursor = connection.cursor()
+        query = DQL.select_subs_by_id
+        result = cursor.execute(query, (cid,))
         rows = result.fetchall()
         if rows:
             for row in rows:
@@ -109,4 +123,10 @@ class SubscriptionModel():
             'planID': self.pid
         }
 
+class CustomerSubscriptionModel:
+    def __init__(self):
+        pass
 
+class SubscriptionBillModel():
+    def __init__(self):
+        pass

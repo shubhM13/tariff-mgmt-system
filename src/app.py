@@ -40,5 +40,4 @@ def auth_error_handler(err):
     return jsonify({'message': 'Could not authorize user.'}), 400
 
 if __name__ == '__main__':
-    # create_database('./db/datashop.db')
     app.run()

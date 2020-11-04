@@ -24,7 +24,7 @@ class PlanList(Resource):
     def get(self):
         plans = PlanModel.find_all()
         if plans:
-            return {'message': [plan.jsonify() for plan in plans]}, 200
+            return {'plans': [plan.jsonify() for plan in plans]}, 200
         return {'message': 'No tarrif plans found!'}, 404
 
 class PlanRegister(Resource):

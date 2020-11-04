@@ -17,7 +17,7 @@ class Customer(Resource):
         customer = CustomerModel.delete_customer(cid)
         user = UserModel.delete_user(cid)
         if customer and user:
-            return {'message': 'customer {0} was successfully deleted from database!'.format(cid)}, 200
+            return {'customers': 'customer {0} was successfully deleted from database!'.format(cid)}, 200
         return {'message': 'Error in deleting the customer!'}, 500
 
 class CustomerList(Resource):
@@ -82,7 +82,7 @@ class CustomerRegister(Resource):
                                         data_payload['first_name'],
                                         data_payload['last_name'],
                                         data_payload['address'],
-                                        data_payload['address'],
+                                        data_payload['city'],
                                         data_payload['state'],
                                         data_payload['pincode'],
                                         data_payload['email'],
@@ -135,15 +135,15 @@ class CustomerUpdate(Resource):
 
         data_payload = parser.parse_args()
 
-        status = CustomerModel.update_customer(data_payload['cid'],
-                                    data_payload['first_name'],
+        status = CustomerModel.update_customer(data_payload['first_name'],
                                     data_payload['last_name'],
                                     data_payload['address'],
                                     data_payload['city'],
                                     data_payload['state'],
                                     data_payload['pincode'],
                                     data_payload['email'],
-                                    data_payload['contact'])
+                                    data_payload['contact'],
+                                    data_payload['cid'])
         if status:
             return {'message': 'Customer data successfully updated in the database!'}, 201
         else:

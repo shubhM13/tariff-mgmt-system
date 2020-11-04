@@ -16,13 +16,14 @@ class User(Resource):
         if user:
             return {'message': 'User {0} was successfully deleted from database!'.format(uid)}, 200
         return {'message': 'Error in deleting the user!'}, 500
+    
 
 class UserList(Resource):
 
     def get(self):
         users = UserModel.find_all()
         if users:
-            return {'message': [user.jsonify() for user in users]}, 200
+            return {'users': [user.jsonify() for user in users]}, 200
         return {'message': 'No users found!'}, 404
 
 class UserRegister(Resource):
@@ -57,8 +58,23 @@ class UserRegister(Resource):
             else:
                 return {'message': 'Error inserting the user!'}, 500
 
+class UserLogin(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('uid',
+                            type=str,
+                            required=True,
+                            help='This field is required!')
 
-        
+        parser.add_argument('pswd',
+                            type=str,
+                            required=True,
+                            help='This field is required!')
+        data_payload = parser.parse_args()                   
+        role = UserModel.login(data_payload['uid'], data_payload['pswd'])
+        if role:
+            return{'role': role}, 200
+        return {'message': 'Login Error!'}, 500
 
 
 

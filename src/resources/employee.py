@@ -25,7 +25,7 @@ class EmployeeList(Resource):
     def get(self):
         employees = EmployeeModel.find_all()
         if employees:
-            return {'message': [employee.jsonify() for employee in employees]}, 200
+            return {'employees': [employee.jsonify() for employee in employees]}, 200
         return {'message': 'No employees found!'}, 404
 
 class EmployeeRegister(Resource):
@@ -42,7 +42,7 @@ class EmployeeRegister(Resource):
                             required=True,
                             help='This field is required!') 
         parser.add_argument('role_id',
-                            type=str,
+                            type=int,
                             required=True,
                             help='This field is required!') 
         parser.add_argument('email',
@@ -94,7 +94,7 @@ class EmployeeUpdate(Resource):
                             required=True,
                             help='This field is required!') 
         parser.add_argument('role_id',
-                            type=str,
+                            type=int,
                             required=True,
                             help='This field is required!') 
         parser.add_argument('email',
@@ -108,12 +108,12 @@ class EmployeeUpdate(Resource):
 
         data_payload = parser.parse_args()
 
-        status = EmployeeModel.update_employee(data_payload['eid'],
-                                    data_payload['first_name'],
+        status = EmployeeModel.update_employee(data_payload['first_name'],
                                     data_payload['last_name'],
                                     data_payload['role_id'],
                                     data_payload['email'],
-                                    data_payload['contact'])
+                                    data_payload['contact']
+                                    ,data_payload['eid'])
         if status:
             return {'message': 'Employee data successfully updated in the database!'}, 201
         else:

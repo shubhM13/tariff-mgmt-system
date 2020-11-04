@@ -41,6 +41,32 @@ update_usage_by_id = "UPDATE usage SET voice=?,data=?,datetime=? WHERE sid=?"
 delete_usage_by_id = "DELETE FROM usage WHERE sid=?"
 
 # 8) Bill table
-insert_bill_by_sid = "INSERT INTO customer_bill VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-update_bill_by_sid = "UPDATE customer_bill SET last_billed = ? WHERE sid = ?"
+insert_bill_by_sid = "INSERT INTO customer_bill(sid, cid, pid, name, tarrif_call, tarrif_data, validity, rental, subs_date, last_billed, voice_usage, data_usage, call_cost, data_cost, total_cost, billing_cycle, amount_due) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+update_bill_by_sid = """UPDATE customer_bill
+                          SET cid = ?
+                              ,pid = ?
+                              ,name = ?
+                              ,tarrif_call = ?
+                              ,tarrif_data = ?
+                              ,validity = ?
+                              ,rental = ?
+                              ,subs_date = ?
+                              ,last_billed = ?
+                              ,voice_usage = ?
+                              ,data_usage = ?
+                              ,call_cost = ?
+                              ,data_cost = ?
+                              ,total_cost = ?
+                              ,billing_cycle = ?
+                              ,amount_due = ?
+                          WHERE sid = ?"""
 delete_bill_by_sid = "DELETE FROM customer_bill WHERE sid=?"
+pay_bill = """UPDATE customer_bill
+              SET payment_date = DATETIME('now', 'localtime')
+                  ,amount_due = 0
+              WHERE sid = ?"""
+                
+
+
+
+

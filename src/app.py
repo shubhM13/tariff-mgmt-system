@@ -9,7 +9,7 @@ from resources.employee import Employee, EmployeeList, EmployeeRegister, Employe
 from resources.plan import Plan, PlanList, PlanRegister
 from resources.role import Role, RoleList
 from resources.usage import UsageRegister
-from resources.subs_billing import Subscription, SubscriptionList, SubscriptionRegister, SubscriptionUpdate, GenerateBill, GetBillForSubscription, GetBillForCustomer, MyAllSubscriptionUsageDetails, MySubscriptionsDetailsList, MySubscriptionUsageDetails, GetAllSubscriptionUsageDetailsForCustomer, GetSubscriptionDetails, GetSubscriptionDetails, My
+from resources.subs_billing import Subscription, SubscriptionList, SubscriptionRegister, SubscriptionUpdate, GenerateBill, GetBillForSubscription, GetBillForCustomer, MyAllSubscriptionUsageDetails, MySubscriptionsDetailsList, MySubscriptionUsageDetails, GetAllSubscriptionUsageDetailsForCustomer, GetSubscriptionDetails, GetSubscriptionDetails, GetSubscriptionUsageDetails, PayBill
 
 app = Flask(__name__)
 api = Api(app)
@@ -54,8 +54,6 @@ api.add_resource(Subscription, '/unsubscribe/<string:sid>')
 
 
 #Post
-api.add_resource(GenerateBill, '/generateBill')
-#Post
 api.add_resource(GetBillForSubscription, '/getBill')
 #Post
 api.add_resource(GetBillForCustomer, '/getBillList')
@@ -64,9 +62,20 @@ api.add_resource(MySubscriptionUsageDetails, '/getUsage')
 #Post
 api.add_resource(MyAllSubscriptionUsageDetails, '/getUsageList')
 #Post
+api.add_resource(GetSubscriptionDetails, '/getSubscription')
+#Post
+api.add_resource(MySubscriptionsDetailsList, '/getSubscriptionList')
+#Post
+api.add_resource(PayBill, '/payBill')
 
 
 
+#Post
+api.add_resource(GetSubscriptionUsageDetails, '/getUsageOp')
+#Post
+api.add_resource(GetAllSubscriptionUsageDetailsForCustomer, '/getUsageListOp')
+#Post
+api.add_resource(GenerateBill, '/generateBill')
 
 
 

@@ -16,7 +16,7 @@ class RoleList(Resource):
     def get(self):
         roles = RoleModel.find_all()
         if roles:
-            return {'message': [role.jsonify() for role in roles]}, 200
+            return {'roles': [role.jsonify() for role in roles]}, 200
         return {'message': 'No roles found!'}, 404
 
 

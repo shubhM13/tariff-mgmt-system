@@ -104,7 +104,19 @@ class UserModel():
             connection.close()
             return False
     
-    #6) jsonify the model
+    #6) Login
+    @classmethod
+    def login(self, uid, pswd):
+        connection = db.connect(db_path)
+        cursor = connection.cursor()
+        query = DQL.login
+        result = cursor.execute(query)
+        role = result.fetchall()
+        connection.close()
+        if role:
+            return role
+
+    #7) jsonify the model
     def jsonify(self):
         return{
             'id': self.uid,

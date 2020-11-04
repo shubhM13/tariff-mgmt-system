@@ -216,5 +216,7 @@ CREATE TABLE customer_bill (
 	,data_cost REAL NOT NULL
 	,total_cost REAL NOT NULL
 	,billing_cycle INTEGER NOT NULL
+	,payment_date DATETIME
+	,amount_due REAL
 	,PRIMARY KEY (sid)
 	);

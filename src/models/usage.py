@@ -91,7 +91,7 @@ class UsageModel():
         cursor = connection.cursor()
         query = DML.update_usage_by_id
         try:
-            result = cursor.execute(query, (sid, voice, data, datetime))
+            result = cursor.execute(query, (voice, data, datetime, sid))
             connection.commit()
             connection.close()
             return True

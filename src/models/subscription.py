@@ -17,7 +17,7 @@ class SubscriptionModel():
           
     #1) Select one
     @classmethod
-    def find_subs_by_uid(cls, sid):
+    def find_by_id(cls, sid):
         connection = db.connect(db_path)
         cursor = connection.cursor()
         query = DQL.select_subs_by_id
@@ -71,7 +71,7 @@ class SubscriptionModel():
         cursor = connection.cursor()
         query = DML.update_subs_by_id
         try:
-            result = cursor.execute(query, (sid, cid, pid, subs_date, last_billed))
+            result = cursor.execute(query, (cid, pid, subs_date, last_billed, sid))
             connection.commit()
             connection.close()
             return True
@@ -106,12 +106,12 @@ class SubscriptionModel():
     
     #6) Update last Billed
     @classmethod
-    def update_last_billed(cls, sid, cid, pid, subs_date, last_billed):
+    def update_last_billed(cls, sid, last_billed):
         connection = db.connect(db_path)
         cursor = connection.cursor()
         query = DML.update_last_billed_date
         try:
-            result = cursor.execute(query, (sid, cid, pid, subs_date, last_billed))
+            result = cursor.execute(query, (last_billed, sid))
             connection.commit()
             connection.close()
             return True
@@ -150,45 +150,47 @@ class CustomerSubscriptionModel:
     #1) Select All
     @classmethod
     def find_all(cls):
-        subscriptions_usages = list()
+        subscriptions_details_list = list()
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DQL.select_all_usage_details
+        query = DQL.select_all_subs_details
         result = cursor.execute(query)
         rows = result.fetchall()
         if rows:
             for row in rows:
-                subscriptions_usages.append(CustomerSubscriptionModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
-            return subscriptions_usages
-        connection.close()
+                subscriptions_details_list.append(CustomerSubscriptionModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
+            connection.close()
+            return subscriptions_details_list
+        
     
     #2) Select by sid
     @classmethod
     def find_subs_by_sid(cls, sid):
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DQL.select_usage_details_by_sid
+        query = DQL.select_subs_details_by_sid
         result = cursor.execute(query, (sid,))
         rows = result.fetchall()
         if rows:
             for row in rows:
-                subscription_usage = CustomerSubscriptionModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
+                subscription_details = CustomerSubscriptionModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
             connection.close()
-            return subscription_usage
+            return subscription_details
     
     #3) Select by cid
     @classmethod
     def find_subs_by_cid(cls, cid):
+        subscriptions_details_list = list()
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DQL.select_usage_details_by_cid
+        query = DQL.select_subs_details_by_cid
         result = cursor.execute(query, (cid,))
         rows = result.fetchall()
         if rows:
             for row in rows:
-                subscription_usage = CustomerSubscriptionModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
+                subscriptions_details_list.append(CustomerSubscriptionModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
             connection.close()
-            return subscription_usage
+            return subscriptions_details_list
     
     #4) jsonify the model
     def jsonify(self):
@@ -231,45 +233,62 @@ class SubscriptionBillModel():
     #1) Select All
     @classmethod
     def find_all(cls):
-        subscriptions_bill_details = list()
+        subscriptions_bill_details_list = list()
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DQL.select_all_subs_details
+        query = DQL.select_all_usage_details
         result = cursor.execute(query)
         rows = result.fetchall()
         if rows:
             for row in rows:
-                subscriptions_bill_details.append(SubscriptionBillModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16]))
-            return subscriptions_bill_details
-        connection.close()
+                subscriptions_bill_details_list.append(SubscriptionBillModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16]))
+            connection.close()
+            return subscriptions_bill_details_list
     
     #2) Select by sid
     @classmethod
-    def find_subs_by_sid(cls, sid):
+    def find_subs_by_sid(cls, sid, for_customer=True):
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DQL.select_subs_details_by_sid
-        result = cursor.execute(query, (sid,))
-        rows = result.fetchall()
-        if rows:
-            for row in rows:
-                subscription_details_sid = SubscriptionBillModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16])
-            connection.close()
-            return subscription_details_sid
+        if for_customer:
+            query = DQL.select_usage_details_by_sid_customer
+            result = cursor.execute(query, (sid,))
+            rows = result.fetchall()            
+            if rows:
+                for row in rows:
+                    subscription_details_sid = SubscriptionBillModel(sid=row[0], cid=None, pid=row[1], name=row[2], tarrif_call=None, tarrif_data=None, validity=None, rental=None, subscribed_on=row[3], last_billed=row[4], voice_usage=row[5], data_usage=row[6], call_cost=None, data_cost=None, total_cost=None, billing_cycle=row[7], not_billed=None)
+        else:
+            query = DQL.select_usage_details_by_sid_operator
+            result = cursor.execute(query, (sid,))
+            rows = result.fetchall()            
+            if rows:
+                for row in rows:
+                    subscription_details_sid = SubscriptionBillModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16])
+        connection.close()
+        return subscription_details_sid 
     
     #3) Select by cid
     @classmethod
-    def find_subs_by_cid(cls, cid):
+    def find_subs_by_cid(cls, cid, for_customer=True):
+        subscription_details_list = list()
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        query = DQL.select_subs_details_by_cid
-        result = cursor.execute(query, (cid,))
-        rows = result.fetchall()
-        if rows:
-            for row in rows:
-                subscription_details_cid = SubscriptionBillModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16])
-            connection.close()
-            return subscription_details_cid
+        if for_customer:
+            query = DQL.select_usage_details_by_cid_customer
+            result = cursor.execute(query, (cid,))
+            rows = result.fetchall()
+            if rows:
+                for row in rows:
+                    subscription_details_list.append(SubscriptionBillModel(sid=row[0], cid=None, pid=row[1], name=row[2], tarrif_call=None, tarrif_data=None, validity=None, rental=None, subscribed_on=row[3], last_billed=row[4], voice_usage=row[5], data_usage=row[6], call_cost=None, data_cost=None, total_cost=None, billing_cycle=row[7], not_billed=None))
+        else:
+            query = DQL.select_usage_details_by_cid_operator
+            result = cursor.execute(query, (cid,))
+            rows = result.fetchall()
+            if rows:
+                for row in rows:
+                    subscription_details_list.append(SubscriptionBillModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16]))
+        connection.close()
+        return subscription_details_list
     
     #4) jsonify the model
     def jsonify(self):

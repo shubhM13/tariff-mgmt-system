@@ -36,16 +36,52 @@ select_all_usage="SELECT * FROM usage"
 # 8) customer_bill table
 select_bill_by_sid = "SELECT * FROM customer_bill WHERE sid=?"
 select_bill_by_cid = """SELECT *
-                         FROM customer_bill
-                         WHERE sid IN (
-                                 SELECT b.sid
-                                 FROM customer_bill b
-                                 WHERE 1 = IIF(b.payment_date IS NOT NULL, IIF(b.payment_date < b.last_billed, CAST(1 AS BIT), CAST(0 AS BIT)), IIF(b.billing_cycle > 1, CAST(1 AS BIT), CAST(0 AS BIT)))
-                                 )"""
+                        FROM customer_bill
+                        WHERE cid=? AND sid IN (
+                                        SELECT b.sid
+                                        FROM customer_bill b
+                                        WHERE 1 = (
+                                                        CASE 
+                                                                WHEN b.payment_date IS NOT NULL
+                                                                        THEN (
+                                                                                        CASE 
+                                                                                                WHEN b.payment_date < b.last_billed
+                                                                                                        THEN CAST(1 AS BIT)
+                                                                                                ELSE CAST(0 AS BIT)
+                                                                                                END
+                                                                                        )
+                                                                ELSE (
+                                                                                CASE 
+                                                                                        WHEN b.billing_cycle > 1
+                                                                                                THEN CAST(1 AS BIT)
+                                                                                        ELSE CAST(0 AS BIT)
+                                                                                        END
+                                                                                )
+                                                                END
+                                                        )
+                                        )"""
 total_bill_cost_for_cid = "SELECT SUM(total_cost) FROM customer_bill WHERE cid=?"
-is_defaulter = """SELECT IIF(b.payment_date IS NOT NULL, IIF(b.payment_date < b.last_billed, CAST(1 AS BIT), CAST(0 AS BIT)), IIF(b.billing_cycle > 1, CAST(1 AS BIT), CAST(0 AS BIT)))
-                  FROM customer_bill b
-                  WHERE b.sid = ?"""
+is_defaulter = """SELECT (
+                                CASE 
+                                        WHEN b.payment_date IS NOT NULL
+                                                THEN (
+                                                                CASE 
+                                                                        WHEN b.payment_date < b.last_billed
+                                                                                THEN CAST(1 AS BIT)
+                                                                        ELSE CAST(0 AS BIT)
+                                                                        END
+                                                                )
+                                        ELSE (
+                                                        CASE 
+                                                                WHEN b.billing_cycle > 1
+                                                                        THEN CAST(1 AS BIT)
+                                                                ELSE CAST(0 AS BIT)
+                                                                END
+                                                        )
+                                        END
+                                )
+                FROM customer_bill b
+                WHERE b.sid = ?"""
 is_bill_present = """SELECT CASE 
                      WHEN EXISTS (
                              SELECT *
@@ -66,26 +102,7 @@ select_subs_details_by_cid = "SELECT * FROM [subscriptions_by_customer] where ci
 
 # 10) VIEW: [bill_details_per_sub]subscription details  - for operator
 select_all_usage_details = "SELECT * FROM [bill_details_per_sub]"
-select_usage_details_by_sid_operator = "SELECT * FROM [bill_details_per_sub] where sid=?"
-select_usage_details_by_sid_customer = """SELECT sid
-                                                ,pid
-                                                ,name
-                                                ,subscribed_on
-                                                ,last_billed
-                                                ,voice_usage
-                                                ,data_usage
-                                                ,billing_cycle
-                                        FROM [bill_details_per_sub]
-                                        WHERE sid = ?"""
-select_usage_details_by_cid_operator = "SELECT * FROM [bill_details_per_sub] where cid=?"
-select_usage_details_by_cid_customer = """SELECT sid
-                                                ,pid
-                                                ,name
-                                                ,subscribed_on
-                                                ,last_billed
-                                                ,voice_usage
-                                                ,data_usage
-                                                ,billing_cycle
-                                        FROM [bill_details_per_sub]
-                                        WHERE cid = ?"""
+select_usage_details_by_sid = "SELECT * FROM bill_details_per_sub where sid=?"
+select_usage_details_by_cid= "SELECT * FROM bill_details_per_sub where cid=?"
+
 

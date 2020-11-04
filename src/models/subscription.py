@@ -247,46 +247,34 @@ class SubscriptionBillModel():
     
     #2) Select by sid
     @classmethod
-    def find_subs_by_sid(cls, sid, for_customer=True):
+    def find_subs_by_sid(cls, sid):
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        if for_customer:
-            query = DQL.select_usage_details_by_sid_customer
-            result = cursor.execute(query, (sid,))
-            rows = result.fetchall()            
-            if rows:
-                for row in rows:
-                    subscription_details_sid = SubscriptionBillModel(sid=row[0], cid=None, pid=row[1], name=row[2], tarrif_call=None, tarrif_data=None, validity=None, rental=None, subscribed_on=row[3], last_billed=row[4], voice_usage=row[5], data_usage=row[6], call_cost=None, data_cost=None, total_cost=None, billing_cycle=row[7], not_billed=None)
+        query = DQL.select_usage_details_by_sid
+        result = cursor.execute(query, (sid,))
+        rows = result.fetchall()            
+        if rows:
+            for row in rows:
+                subscription_details_sid = SubscriptionBillModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16])
         else:
-            query = DQL.select_usage_details_by_sid_operator
-            result = cursor.execute(query, (sid,))
-            rows = result.fetchall()            
-            if rows:
-                for row in rows:
-                    subscription_details_sid = SubscriptionBillModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16])
+            print("No Data Fetched for given sid")
         connection.close()
         return subscription_details_sid 
     
     #3) Select by cid
     @classmethod
-    def find_subs_by_cid(cls, cid, for_customer=True):
+    def find_subs_by_cid(cls, cid):
         subscription_details_list = list()
         connection = db.connect(db_path)
         cursor = connection.cursor()
-        if for_customer:
-            query = DQL.select_usage_details_by_cid_customer
-            result = cursor.execute(query, (cid,))
-            rows = result.fetchall()
-            if rows:
-                for row in rows:
-                    subscription_details_list.append(SubscriptionBillModel(sid=row[0], cid=None, pid=row[1], name=row[2], tarrif_call=None, tarrif_data=None, validity=None, rental=None, subscribed_on=row[3], last_billed=row[4], voice_usage=row[5], data_usage=row[6], call_cost=None, data_cost=None, total_cost=None, billing_cycle=row[7], not_billed=None))
+        query = DQL.select_usage_details_by_cid
+        result = cursor.execute(query, (cid,))
+        rows = result.fetchall()
+        if rows:
+            for row in rows:
+                subscription_details_list.append(SubscriptionBillModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16]))
         else:
-            query = DQL.select_usage_details_by_cid_operator
-            result = cursor.execute(query, (cid,))
-            rows = result.fetchall()
-            if rows:
-                for row in rows:
-                    subscription_details_list.append(SubscriptionBillModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16]))
+            print("No Data Fetched for given cid")
         connection.close()
         return subscription_details_list
     

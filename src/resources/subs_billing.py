@@ -92,57 +92,54 @@ class SubscriptionUpdate(Resource):
 
 # To generate bill - by operator : 1) Inserts in customer_bill table 2) Updates the last_billed date in Subscription table
 class GenerateBill(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('sid',
-                            type=str,
-                            required=True,
-                            help='This is required!')
-        data_payload = parser.parse_args()
-        sid = data_payload['sid']
+    def get(self, sid):
         current_billing_date = time.strftime('%Y-%m-%d %H:%M:%S')        
         bill = SubscriptionBillModel.find_subs_by_sid(sid)
         if bill:
-            is_defaulter = BillModel.is_defaulter(sid)
-            if is_defaulter:
-                due_amount = BillModel.get_total_due(sid)
+            old_bill = BillModel.find_by_sid(sid)
+            previously_billed = (old_bill.sid == sid)
+            if previously_billed:
+                is_defaulter = BillModel.is_defaulter(sid)
+                if is_defaulter:
+                    due_amount = BillModel.get_total_due(sid)
+                else:
+                    due_amount = 0
                 bill_insert_status = BillModel.update_bill_sid(bill.cid
-                                                               ,bill.pid
-                                                               ,bill.name
-                                                               ,bill.tarrif_call
-                                                               ,bill.tarrif_data
-                                                               ,bill.validity
-                                                               ,bill.rental
-                                                               ,bill.subscribed_on
-                                                               ,current_billing_date
-                                                               ,bill.voice_usage
-                                                               ,bill.data_usage
-                                                               ,bill.call_cost
-                                                               ,bill.data_cost
-                                                               ,bill.total_cost
-                                                               ,bill.billing_cycle
-                                                               ,due_amount
-                                                               ,sid)
-                billing_date_update_status = SubscriptionModel.update_last_billed(sid, current_billing_date)
+                                                            ,bill.pid
+                                                            ,bill.name
+                                                            ,bill.tarrif_call
+                                                            ,bill.tarrif_data
+                                                            ,bill.validity
+                                                            ,bill.rental
+                                                            ,bill.subscribed_on
+                                                            ,current_billing_date
+                                                            ,bill.voice_usage
+                                                            ,bill.data_usage
+                                                            ,bill.call_cost
+                                                            ,bill.data_cost
+                                                            ,bill.total_cost
+                                                            ,bill.billing_cycle
+                                                            ,due_amount
+                                                            ,sid)
             else:
-                due_amount = 0
                 bill_insert_status = BillModel.insert_into_table(sid
-                                                               ,bill.cid
-                                                               ,bill.pid
-                                                               ,bill.name
-                                                               ,bill.tarrif_call
-                                                               ,bill.tarrif_data
-                                                               ,bill.validity
-                                                               ,bill.rental
-                                                               ,bill.subscribed_on
-                                                               ,current_billing_date
-                                                               ,bill.voice_usage
-                                                               ,bill.data_usage
-                                                               ,bill.call_cost
-                                                               ,bill.data_cost
-                                                               ,bill.total_cost
-                                                               ,bill.billing_cycle
-                                                               ,due_amount)
+                                                            ,bill.cid
+                                                            ,bill.pid
+                                                            ,bill.name
+                                                            ,bill.tarrif_call
+                                                            ,bill.tarrif_data
+                                                            ,bill.validity
+                                                            ,bill.rental
+                                                            ,bill.subscribed_on
+                                                            ,current_billing_date
+                                                            ,bill.voice_usage
+                                                            ,bill.data_usage
+                                                            ,bill.call_cost
+                                                            ,bill.data_cost
+                                                            ,bill.total_cost
+                                                            ,bill.billing_cycle
+                                                            ,due_amount)
+            billing_date_update_status = SubscriptionModel.update_last_billed(sid, current_billing_date)
             if bill_insert_status and billing_date_update_status:
                 return {'message': 'Bill generated successfully!'}, 201
             else:
@@ -179,72 +176,23 @@ class GetBillForCustomer(Resource):
         if bills:
             return {'bills': [bill.jsonify() for bill in bills]}, 200
         return {'message': 'The operator has not genereated any bills for you yet. Please check after billing cycle completion'}, 404
-# Usage Details : sid - cusrotmer portal
-class MySubscriptionUsageDetails(Resource):
-    def post(self):
-        parser = reqparse.RequestParser
-        parser.add_argument('sid',
-                             type=str,
-                             required=True,
-                             help='This is required!')
-        data_payload = parser.parse_args()
-        sid = data_payload['sid']
-        subscription = SubscriptionBillModel.find_subs_by_sid(sid, for_customer=True)
-        if subscription:
-            return {'subscription': subscription.jsonify()}, 200
-        return {'message': 'No subscription found with id '+sid}, 404
-# Usage Details : cid - customer portal
-class MyAllSubscriptionUsageDetails(Resource):
-    def post(self):
-        parser = reqparse.RequestParser
-        parser.add_argument('cid',
-                             type=str,
-                             required=True,
-                             help='This is required!')
-        data_payload = parser.parse_args()
-        cid = data_payload['cid']
-        subs = SubscriptionBillModel.find_subs_by_cid(cid, for_customer=True)
-        if subs:
-            return {'subscriptions': [sub.jsonify() for sub in subs]}, 200
-        return {'message': 'No subscriptions found for customer '+cid+'. Please subscribe to new plans!'}, 404
 # Usage Details : sid - operator portal
 class GetSubscriptionUsageDetails(Resource):
-    def post(self):
-        parser = reqparse.RequestParser
-        parser.add_argument('sid',
-                             type=str,
-                             required=True,
-                             help='This is required!')
-        data_payload = parser.parse_args()
-        sid = data_payload['sid']
-        subscription = SubscriptionBillModel.find_subs_by_sid(sid, for_customer=False)
+    def get(self, sid):
+        subscription = SubscriptionBillModel.find_subs_by_sid(sid)
         if subscription:
             return {'subscriptions': subscription.jsonify()}, 200
         return {'message': 'No subscriptions found with id '+sid}, 404 
 # Usage Details : cid - operator portal
-class GetAllSubscriptionUsageDetailsForCustomer(Resource):
-    def post(self):
-        parser = reqparse.RequestParser
-        parser.add_argument('cid',
-                             type=str,
-                             required=True,
-                             help='This is required!')
-        data_payload = parser.parse_args()
-        cid = data_payload['cid']
-        subs = SubscriptionBillModel.find_subs_by_cid(cid, for_customer=False)
+class GetAllSubscriptionUsageDetails(Resource):
+    def get(self, cid):
+        subs = SubscriptionBillModel.find_subs_by_cid(cid)
         if subs:
             return {'subscriptions': [sub.jsonify() for sub in subs]}, 200
         return {'message': 'No subscriptions found for customer '+cid}, 404   
 # Subscription Details : sid
 class GetSubscriptionDetails(Resource):
-    def post(self):
-        parser = reqparse.RequestParser
-        parser.add_argument('sid',
-                             type=str,
-                             required=True,
-                             help='This is required!')
-        data_payload = parser.parse_args()
-        sid = data_payload['sid']
+    def get(self, sid):
         subscription = CustomerSubscriptionModel.find_subs_by_sid(sid)
         if subscription:
             return {'subscription': subscription.jsonify()}, 200
@@ -252,14 +200,7 @@ class GetSubscriptionDetails(Resource):
 
 # Subscription Details : cid
 class MySubscriptionsDetailsList(Resource):      
-    def post(self):
-        parser = reqparse.RequestParser
-        parser.add_argument('cid',
-                             type=str,
-                             required=True,
-                             help='This is required!')
-        data_payload = parser.parse_args()
-        cid = data_payload['cid']
+    def get(self, cid):
         subs = CustomerSubscriptionModel.find_subs_by_cid(cid)
         if subs:
             return {'subscriptions': [sub.jsonify() for sub in subs]}, 200
@@ -267,14 +208,7 @@ class MySubscriptionsDetailsList(Resource):
 
 # Pay Bill : sid
 class PayBill(Resource):
-    def post(self):
-        parser = reqparse.RequestParser
-        parser.add_argument('sid',
-                             type=str,
-                             required=True,
-                             help='This is required!')
-        data_payload = parser.parse_args()
-        sid = data_payload['sid']
+    def get(self, sid):
         bill_paid = BillModel.pay_bill(sid)
         if bill_paid:
             return {'message': 'Transaction Succesful ! You have paid the bill for sid '+sid+' on '+str(time.strftime('%d-%m-%Y %H:%M:%S'))+'!'}, 200

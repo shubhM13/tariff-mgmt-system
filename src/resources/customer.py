@@ -54,9 +54,9 @@ class CustomerRegister(Resource):
                             required=True,
                             help='This field is required!') 
         parser.add_argument('pincode',
-                        type=int,
-                        required=True,
-                        help='This field is required!') 
+                            type=int,
+                            required=True,
+                            help='This field is required!') 
         parser.add_argument('email',
                             type=str,
                             required=True,
@@ -71,26 +71,22 @@ class CustomerRegister(Resource):
                             help='This field is required!') 
 
         data_payload = parser.parse_args()
-
-        if CustomerModel.find_by_id(data_payload['cid']):
-            return {'message': 'Customer with the same customer id already exists in database'}, 400
+        status_user_insert = UserModel.insert_into_table(cid,
+                                    data_payload['pswd'],
+                                    6)                              # role_id : 6 -- Customer
+        status_customer_insert = CustomerModel.insert_into_table(cid,
+                                    data_payload['first_name'],
+                                    data_payload['last_name'],
+                                    data_payload['address'],
+                                    data_payload['city'],
+                                    data_payload['state'],
+                                    data_payload['pincode'],
+                                    data_payload['email'],
+                                    data_payload['contact'])
+        if status_user_insert and status_customer_insert:
+            return {'message': 'Customer successfully added to the database!'}, 201
         else:
-            status_user_insert = UserModel.insert_into_table(cid,
-                                        data_payload['pswd'],
-                                        6)                              # role_id : 6 -- Customer
-            status_customer_insert = CustomerModel.insert_into_table(cid,
-                                        data_payload['first_name'],
-                                        data_payload['last_name'],
-                                        data_payload['address'],
-                                        data_payload['city'],
-                                        data_payload['state'],
-                                        data_payload['pincode'],
-                                        data_payload['email'],
-                                        data_payload['contact'])
-            if status_user_insert and status_customer_insert:
-                return {'message': 'Customer successfully added to the database!'}, 201
-            else:
-                return {'message': 'Error inserting the customer!'}, 500
+            return {'message': 'Error inserting the customer!'}, 500
 
 class CustomerUpdate(Resource):
 

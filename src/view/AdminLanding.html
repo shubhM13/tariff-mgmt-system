@@ -21,12 +21,13 @@
       </div>
     <hr>
     <br>
-   
-    <span style="align-content: center;">
-      <button class="btn btn-primary" id="add-tariff-btn">Add a Tariff</button>
-      <button class="btn btn-primary" id="search-tariff-btn">Search a Tariff</button>
-      <button class="btn btn-primary" id="update-tariff-btn">Update a Tariff</button>
+      <form action="#" id="admin-form">
+    <span style="align-content: center; justify-items: center;">
+      <button class="btn btn-primary" id="add-tariff-btn" style="width: auto;">Add a Tariff</button>
+      <button class="btn btn-primary" id="search-tariff-btn" style="width: auto;">Search a Tariff</button>
+      <button class="btn btn-primary" id="update-tariff-btn" style="width: auto;">Update a Tariff</button>
     </span>
+  </form>
 
     <hr>
     <br> 
@@ -59,16 +60,19 @@
               <td>28 days</td>
               <td>300</td>
               <td>
-                <input type="checkbox" id="plan-check" value="">
+                <form action="#" id="admindelete-form">
+
+                  <div class="row justify-content-centre" style="padding-top:5px; padding-right: 20px; margin-left: 5px;">
+              <button class="btn btn-primary" id="delete-btn" style="width: auto;">Delete</button> 
+              </div>
+              </form>
               </td>
             </tr>
         </tbody>
        
       </table>
-    
-    <div class="row justify-content-end" style="padding-top:5px; padding-right: 20px;">
-<button class="btn btn-primary" id="delete-btn">Delete</button> 
-</div>
+  
+
 <hr>
     </div>
 

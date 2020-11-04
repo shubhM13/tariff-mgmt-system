@@ -59,23 +59,19 @@ class EmployeeRegister(Resource):
                             help='This field is required!') 
 
         data_payload = parser.parse_args()
-
-        if EmployeeModel.find_by_id(data_payload['eid']):
-            return {'message': 'Employee with the same employee id already exists in database'}, 400
+        status_user_insert = UserModel.insert_into_table(eid,
+                                    data_payload['pswd'],
+                                    data_payload['role_id'])                              # role_id : 6 -- Employee
+        status_employee_insert = EmployeeModel.insert_into_table(eid,
+                                    data_payload['first_name'],
+                                    data_payload['last_name'],
+                                    data_payload['role_id'],
+                                    data_payload['email'],
+                                    data_payload['contact'])
+        if status_user_insert and status_employee_insert:
+            return {'message': 'Employee successfully added to the database!'}, 201
         else:
-            status_user_insert = UserModel.insert_into_table(eid,
-                                        data_payload['pswd'],
-                                        data_payload['role_id'])                              # role_id : 6 -- Employee
-            status_employee_insert = EmployeeModel.insert_into_table(eid,
-                                        data_payload['first_name'],
-                                        data_payload['last_name'],
-                                        data_payload['role_id'],
-                                        data_payload['email'],
-                                        data_payload['contact'])
-            if status_user_insert and status_employee_insert:
-                return {'message': 'Employee successfully added to the database!'}, 201
-            else:
-                return {'message': 'Error inserting the employee!'}, 500
+            return {'message': 'Error inserting the employee!'}, 500
 
 class EmployeeUpdate(Resource):
 

@@ -9,7 +9,7 @@ from resources.employee import Employee, EmployeeList, EmployeeRegister, Employe
 from resources.plan import Plan, PlanList, PlanRegister
 from resources.role import Role, RoleList
 from resources.usage import UsageRegister
-from resources.subs_billing import Subscription, SubscriptionList, SubscriptionRegister, SubscriptionUpdate, GenerateBill, GetBillForSubscription, GetBillForCustomer, MyAllSubscriptionUsageDetails, MySubscriptionsDetailsList, MySubscriptionUsageDetails, GetAllSubscriptionUsageDetailsForCustomer, GetSubscriptionDetails, GetSubscriptionDetails, GetSubscriptionUsageDetails, PayBill
+from resources.subs_billing import Subscription, SubscriptionList, SubscriptionRegister, SubscriptionUpdate, GenerateBill, GetBillForSubscription, GetBillForCustomer, MySubscriptionsDetailsList, GetAllSubscriptionUsageDetails, GetSubscriptionDetails, GetSubscriptionDetails, GetSubscriptionUsageDetails, PayBill
 
 app = Flask(__name__)
 api = Api(app)
@@ -25,13 +25,17 @@ api.add_resource(UserLogin, '/login')
 
 api.add_resource(Customer, '/customer/<string:cid>')
 api.add_resource(CustomerList, '/customers')
+#works
 api.add_resource(CustomerRegister, '/cregister')
+#works - check non existent
 api.add_resource(CustomerUpdate, '/cupdate')
 
 
 api.add_resource(Employee, '/employee/<string:eid>')
 api.add_resource(EmployeeList, '/employees')
+#works
 api.add_resource(EmployeeRegister, '/eregister')
+#works - check non existent
 api.add_resource(EmployeeUpdate, '/eupdate')
 
 
@@ -47,35 +51,31 @@ api.add_resource(RoleList, '/roles')
 api.add_resource(UsageRegister, '/usage')
 
 
-#Post
+#Post - works
 api.add_resource(SubscriptionRegister, '/subscribe')
-#Delete
+#Delete - works
 api.add_resource(Subscription, '/unsubscribe/<string:sid>')
 
 
-#Post
+#Post - works
 api.add_resource(GetBillForSubscription, '/getBill')
-#Post
+#Post - works
 api.add_resource(GetBillForCustomer, '/getBillList')
-#Post
-api.add_resource(MySubscriptionUsageDetails, '/getUsage')
-#Post
-api.add_resource(MyAllSubscriptionUsageDetails, '/getUsageList')
-#Post
-api.add_resource(GetSubscriptionDetails, '/getSubscription')
-#Post
-api.add_resource(MySubscriptionsDetailsList, '/getSubscriptionList')
-#Post
-api.add_resource(PayBill, '/payBill')
+#Get - works
+api.add_resource(GetSubscriptionDetails, '/getSubscription/<string:sid>')
+#Get - works
+api.add_resource(MySubscriptionsDetailsList, '/getSubscriptionList/<string:cid>')
+#Get - works
+api.add_resource(PayBill, '/payBill/<string:sid>')
 
 
 
-#Post
-api.add_resource(GetSubscriptionUsageDetails, '/getUsageOp')
-#Post
-api.add_resource(GetAllSubscriptionUsageDetailsForCustomer, '/getUsageListOp')
-#Post
-api.add_resource(GenerateBill, '/generateBill')
+#Get - works
+api.add_resource(GetSubscriptionUsageDetails, '/getUsageOp/<string:sid>')
+#Get - works
+api.add_resource(GetAllSubscriptionUsageDetails, '/getUsageListOp/<string:cid>')
+#Get - works
+api.add_resource(GenerateBill, '/generateBill/<string:sid>')
 
 
 

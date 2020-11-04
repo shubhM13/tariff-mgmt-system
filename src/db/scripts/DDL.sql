@@ -79,7 +79,8 @@ WHERE s.cid IN (
 		FROM customer
 		);
 
-CREATE VIEW IF NOT EXISTS [aggregate_usage_current_billing_cycle]
+CREATE VIEW 
+IF NOT EXISTS [aggregate_usage_current_billing_cycle]
 AS
 SELECT DISTINCT u.sid AS sid
 	,SUM(u.voice) AS voice_usage
@@ -93,111 +94,135 @@ WHERE u.datetime BETWEEN strftime('%Y-%m-%d', s.last_billed)
 					))
 GROUP BY u.sid;
 
-CREATE VIEW IF NOT EXISTS [bill_details_per_sub]
-AS
-SELECT c.sid AS sid
-	,c.cid AS cid
-	,c.pid AS pid
-	,c.name AS name
-	,c.tarrif_call AS tarrif_call
-	,c.tarrif_data AS tarrif_data
-	,c.validity AS validity
-	,c.rental AS rental
-	,s.subs_date AS subscribed_on
-	,s.last_billed AS last_billed
-	,a.voice_usage AS voice_usage
-	,a.data_usage AS data_usage
-	,((voice_usage * tarrif_call) / 100) AS call_cost
-	,((data_usage * tarrif_data) / 100) AS data_cost
-	,((voice_usage * tarrif_call) / 100 + (data_usage * tarrif_data) / 100 + rental) AS total_cost
-	,IIF((
-			strftime('%Y', DATE (
-					'now'
-					,'localtime'
-					)) = strftime('%Y', s.subs_date)
-			), (
-			IIF((
-					strftime('%m', DATE (
-							'now'
-							,'localtime'
-							)) = strftime('%m', s.subs_date)
-					), 1, (
-					IIF((
-							(strftime('%d', s.subs_date)) > (
-								strftime('%d', DATE (
+CREATE VIEW
+IF NOT EXISTS [bill_details_per_sub] AS
+	SELECT c.sid AS sid
+		,c.cid AS cid
+		,c.pid AS pid
+		,c.name AS name
+		,c.tarrif_call AS tarrif_call
+		,c.tarrif_data AS tarrif_data
+		,c.validity AS validity
+		,c.rental AS rental
+		,s.subs_date AS subscribed_on
+		,s.last_billed AS last_billed
+		,a.voice_usage AS voice_usage
+		,a.data_usage AS data_usage
+		,((voice_usage * tarrif_call) / 100) AS call_cost
+		,((data_usage * tarrif_data) / 100) AS data_cost
+		,((voice_usage * tarrif_call) / 100 + (data_usage * tarrif_data) / 100 + rental) AS total_cost
+		,(
+			CASE 
+				WHEN (
+						strftime('%Y', DATE (
+								'now'
+								,'localtime'
+								)) = strftime('%Y', s.subs_date)
+						)
+					THEN (
+							CASE 
+								WHEN (
+										strftime('%m', DATE (
+												'now'
+												,'localtime'
+												)) = strftime('%m', s.subs_date)
+										)
+									THEN 1
+								ELSE (
+										CASE 
+											WHEN (
+													(strftime('%d', s.subs_date)) > (
+														strftime('%d', DATE (
+																'now'
+																,'localtime'
+																))
+														)
+													)
+												THEN (
+														strftime('%m', DATE (
+																'now'
+																,'localtime'
+																)) - strftime('%m', s.subs_date)
+														)
+											ELSE (
+													strftime('%m', DATE (
+															'now'
+															,'localtime'
+															)) - strftime('%m', s.subs_date) + 1
+													)
+											END
+										)
+								END
+							)
+				ELSE (
+						CASE 
+							WHEN (
+									(strftime('%d', s.subs_date)) > (
+										strftime('%d', DATE (
+												'now'
+												,'localtime'
+												))
+										)
+									)
+								THEN (
+										(
+											(
+												strftime('%m', DATE (
+														'now'
+														,'localtime'
+														)) - strftime('%m', s.subs_date)
+												) % 12
+											) + (
+											strftime('%Y', DATE (
+													'now'
+													,'localtime'
+													)) - strftime('%Y', s.subs_date) - 1
+											) * 12
+										)
+							ELSE (
+									(
+										(
+											strftime('%m', DATE (
+													'now'
+													,'localtime'
+													)) - strftime('%m', s.subs_date) + 1
+											) % 12
+										) + (
+										strftime('%Y', DATE (
+												'now'
+												,'localtime'
+												)) - strftime('%Y', s.subs_date) - 1
+										) * 12
+									)
+							END
+						)
+				END
+			) AS billing_cycle
+		,(
+			CASE 
+				WHEN (
+						(
+							strftime('%d', s.subs_date) <= strftime('%d', DATE (
+									'now'
+									,'localtime'
+									))
+							)
+						AND (
+							(
+								strftime('%m', DATE (
 										'now'
 										,'localtime'
-										))
-								)
-							), (
-							strftime('%m', DATE (
-									'now'
-									,'localtime'
-									)) - strftime('%m', s.subs_date)
-							), (
-							strftime('%m', DATE (
-									'now'
-									,'localtime'
-									)) - strftime('%m', s.subs_date) + 1
-							))
-					))
-			), (
-			IIF((
-					(strftime('%d', s.subs_date)) > (
-						strftime('%d', DATE (
-								'now'
-								,'localtime'
-								))
+										)) - strftime('%m', s.last_billed)
+								) >= 1
+							)
 						)
-					), (
-					(
-						(
-							strftime('%m', DATE (
-									'now'
-									,'localtime'
-									)) - strftime('%m', s.subs_date)
-							) % 12
-						) + (
-						strftime('%Y', DATE (
-								'now'
-								,'localtime'
-								)) - strftime('%Y', s.subs_date) - 1
-						) * 12
-					), (
-					(
-						(
-							strftime('%m', DATE (
-									'now'
-									,'localtime'
-									)) - strftime('%m', s.subs_date) + 1
-							) % 12
-						) + (
-						strftime('%Y', DATE (
-								'now'
-								,'localtime'
-								)) - strftime('%Y', s.subs_date) - 1
-						) * 12
-					))
-			)) AS billing_cycle
-	,IIF((
-			(
-				strftime('%d', s.subs_date) <= strftime('%d', DATE (
-						'now'
-						,'localtime'
-						))
-				)
-			AND (
-				(
-					strftime('%m', DATE (
-							'now'
-							,'localtime'
-							)) - strftime('%m', s.last_billed)
-					) >= 1
-				)
-			), (CAST(1 AS BIT)), (CAST(0 AS BIT))) AS not_billed
-FROM subscription s
-INNER JOIN [subscriptions_by_customer] c ON s.sid = c.sid
-INNER JOIN [aggregate_usage_current_billing_cycle] a ON c.sid = a.sid
+					THEN (CAST(1 AS BIT))
+				ELSE (CAST(0 AS BIT))
+				END
+			) AS not_billed
+	FROM subscription s
+	INNER JOIN [subscriptions_by_customer] c ON s.sid = c.sid
+	INNER JOIN [aggregate_usage_current_billing_cycle] a ON c.sid = a.sid
 
 CREATE TABLE customer_bill (
 	sid VARCHAR(10) NOT NULL

@@ -27,6 +27,7 @@ select_all_subs = "SELECT * FROM subscription"
 # 6) tarrif_plan table
 select_plan_by_id = "SELECT * FROM tarrif_plan WHERE pid=?"
 select_all_plan = "SELECT * FROM tarrif_plan"
+select_all_plan_cid = "SELECT * FROM tarrif_plan WHERE pid NOT IN (SELECT pid FROM subscription WHERE cid = ?)"
 
 
 # 7) usage table

@@ -21,8 +21,8 @@ class Plan(Resource):
 
 class PlanList(Resource):
 
-    def get(self):
-        plans = PlanModel.find_all()
+    def get(self, cid):
+        plans = PlanModel.find_all_not_subscribed(cid)
         if plans:
             return {'plans': [plan.jsonify() for plan in plans]}, 200
         return {'message': 'No tarrif plans found!'}, 404

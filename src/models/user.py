@@ -110,7 +110,7 @@ class UserModel():
         connection = db.connect(db_path)
         cursor = connection.cursor()
         query = DQL.login
-        result = cursor.execute(query)
+        result = cursor.execute(query, (uid, pswd))
         role = result.fetchall()
         connection.close()
         if role:

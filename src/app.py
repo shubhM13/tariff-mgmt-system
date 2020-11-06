@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from security import authenticate, identity
 from flask_jwt import JWT, jwt_required, JWTError
+from flask_cors import CORS 
 
 from resources.user import User, UserList, UserRegister, UserLogin
 from resources.customer import Customer, CustomerList, CustomerRegister, CustomerUpdate
@@ -12,6 +13,7 @@ from resources.usage import UsageRegister
 from resources.subs_billing import Subscription, SubscriptionList, SubscriptionRegister, SubscriptionUpdate, GenerateBill, GetBillForSubscription, GetBillForCustomer, MySubscriptionsDetailsList, GetAllSubscriptionUsageDetails, GetSubscriptionDetails, GetSubscriptionDetails, GetSubscriptionUsageDetails, PayBill
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 app.secret_key = 'test'
 jwt = JWT(app, authenticate, identity)
@@ -40,7 +42,7 @@ api.add_resource(EmployeeUpdate, '/eupdate')
 
 
 api.add_resource(Plan, '/plan/<string:pid>')
-api.add_resource(PlanList, '/plans')
+api.add_resource(PlanList, '/plans/<string:cid>')
 api.add_resource(PlanRegister, '/pregister')
 
 
@@ -57,10 +59,10 @@ api.add_resource(SubscriptionRegister, '/subscribe')
 api.add_resource(Subscription, '/unsubscribe/<string:sid>')
 
 
-#Post - works
-api.add_resource(GetBillForSubscription, '/getBill')
-#Post - works
-api.add_resource(GetBillForCustomer, '/getBillList')
+#Get - works
+api.add_resource(GetBillForSubscription, '/getBill/<string:sid>')
+#Get - works
+api.add_resource(GetBillForCustomer, '/getBillList/<string:cid>')
 #Get - works
 api.add_resource(GetSubscriptionDetails, '/getSubscription/<string:sid>')
 #Get - works
@@ -71,9 +73,9 @@ api.add_resource(PayBill, '/payBill/<string:sid>')
 
 
 #Get - works
-api.add_resource(GetSubscriptionUsageDetails, '/getUsageOp/<string:sid>')
+api.add_resource(GetSubscriptionUsageDetails, '/getUsage/<string:sid>')
 #Get - works
-api.add_resource(GetAllSubscriptionUsageDetails, '/getUsageListOp/<string:cid>')
+api.add_resource(GetAllSubscriptionUsageDetails, '/getUsageList/<string:cid>')
 #Get - works
 api.add_resource(GenerateBill, '/generateBill/<string:sid>')
 

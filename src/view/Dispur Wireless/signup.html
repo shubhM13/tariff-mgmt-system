@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Registration</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link href="../assets/global/css/style.css" rel="stylesheet">
+    <link href="../assets/global/css/theme.css" rel="stylesheet">
+    <link href="../assets/global/css/ui.css" rel="stylesheet">
+    <link href="../assets/admin/md-layout1/material-design/css/material.css" rel="stylesheet">
+    <link href="../assets/admin/md-layout1/css/layout.css" rel="stylesheet">
+  </head>
+  <!-- BEGIN BODY -->
+  <body class="color-purple">
+        <div class="align-items-center vh-100 vw-100">
+            <div class="col-md-6 mx-auto center">
+                <h1 class="text-center" style="font-size:4rem;padding-bottom:20px;">Dispur Wireless</h1>
+              <div class="panel panel-default no-bd">
+                <div class="panel-header bg-dark" style="padding: 3%;">
+                  <h2 class="panel-title" style="font-size:20px"><strong>Sign Up</strong></h2>
+                </div>
+                <div class="panel-body bg-white">
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <form method="POST" role="form" class="form-validation" novalidate>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="control-label">Firstname</label>
+                              <div class="append-icon">
+                                <input type="text" name="fname" class="form-control" minlength="3" placeholder="Minimum 3 characters..." required>
+                                <i class="icon-user"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="control-label">Lastname</label>
+                              <div class="append-icon">
+                                <input type="text" name="lname" class="form-control" minlength="4" placeholder="Minimum 4 characters..." required>
+                                <i class="icon-user"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="control-label">Email Address</label>
+                              <div class="append-icon">
+                                <input type="email" name="email" class="form-control" placeholder="Enter your email..." required>
+                                <i class="icon-envelope"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="control-label">Address</label>
+                              <div class="append-icon">
+                                <input type="text" name="address" class="form-control" placeholder="Enter your address..." required>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="control-label">Phone Number</label>
+                              <div class="append-icon">
+                                <input type="text" name="contact" class="form-control" placeholder="Mobile Number..." minlength="3" required>
+                                <i class="icon-screen-smartphone"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="control-label">City</label>
+                              <div class="append-icon">
+                                <input type="text" name="city" class="form-control" placeholder="Enter your city..." required>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="control-label">Password</label>
+                              <div class="append-icon">
+                                <input type="password" name="pswd" id="password" class="form-control" placeholder="Between 4 and 16 characters" minlength="4" maxlength="16" required>
+                                <i class="icon-lock"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="control-label">State</label>
+                              <div class="append-icon">
+                                <input type="text" name="state" class="form-control" placeholder="Enter your state..." required>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="control-label">What's the result of 4 + 8 ?</label>
+                              <input type="text" name="calcul" class="form-control" placeholder="Human verification!">
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="control-label">Pincode</label>
+                              <div class="append-icon">
+                                <input type="text" name="pin" class="form-control" placeholder="Enter your pincode..." required>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="text-center  m-t-20">
+                          <button type="submit" class="btn btn-embossed btn-primary" style="background-color:#7289da!important">Sign Up</button>
+                          <button type="reset" class="cancel btn btn-embossed btn-default m-b-10 m-r-0">Cancel</button>
+                          <div class="mb-3 text-center" style="font-size:1rem;">Already have an account ? <a href="login--.html">Login</a></div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">
+          Copyright &copy; <a href="https://github.com/tango97" style="text-decoration:none"><i class="fa fa-github"></i> tango97</a>
+        </p>
+      </div>
+      <!-- /.container -->
+    </footer>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+    <script src="../assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+    <script src="../assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/global/plugins/appear/jquery.appear.js"></script>
+    <script src="../assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script> <!-- Jquery Cookies, for theme -->
+    <script src="../assets/global/plugins/jquery-block-ui/jquery.blockUI.min.js"></script> <!-- simulate synchronous behavior when using AJAX -->
+    <script src="../assets/global/plugins/bootbox/bootbox.min.js"></script> <!-- Modal with Validation -->
+    <script src="../assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script> <!-- Custom Scrollbar sidebar -->
+    <script src="../assets/global/plugins/bootstrap-dropdown/bootstrap-hover-dropdown.min.js"></script> <!-- Show Dropdown on Mouseover -->
+    <script src="../assets/global/plugins/select2/dist/js/select2.full.min.js"></script> <!-- Select Inputs -->
+    <script src="../assets/global/plugins/icheck/icheck.min.js"></script> <!-- Checkbox & Radio Inputs -->
+    <script src="../assets/global/plugins/backstretch/backstretch.min.js"></script> <!-- Background Image -->
+    <script src="../assets/global/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js"></script> <!-- Animated Progress Bar -->
+    <script src="../assets/global/plugins/charts-chartjs/Chart.min.js"></script>
+    <script src="../assets/global/js/builder.js"></script> <!-- Theme Builder -->
+    <script src="../assets/global/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
+    <script src="../assets/global/js/widgets/notes.js"></script> <!-- Notes Widget -->
+    <script src="../assets/global/js/quickview.js"></script> <!-- Chat Script -->
+    <script src="../assets/global/js/pages/search.js"></script> <!-- Search Script -->
+    <!-- BEGIN PAGE SCRIPTS -->
+    <script src="../assets/global/plugins/jquery-validation/jquery.validate.js"></script> <!-- Form Validation -->
+    <script src="../assets/global/plugins/jquery-validation/additional-methods.min.js"></script> <!-- Form Validation Additional Methods - OPTIONAL -->
+    <!-- END  PAGE SCRIPTS -->
+    <script src="../assets/admin/md-layout1/material-design/js/material.js"></script>
+    <script src="../assets/admin/layout1/js/layout.js"></script>
+    <script>
+      //$.material.init();
+    $(document).ready(function() {
+    // Validation
+    if($('.form-validation').length && $.fn.validate){
+        /* We add an addition rule to show you. Example : 4 + 8. You can other rules if you want */
+        $.validator.methods.operation = function(value, element, param) {
+            return value == param;
+        };
+        $.validator.methods.customemail = function(value, element) {
+            return /^([-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4})+$/.test(value);
+        };
+        $('.form-validation').each(function(){
+            var formValidation = $(this).validate({
+                success: "valid",
+                submitHandler: function() {
+                                          event.preventDefault();
+                                          // get the form data
+                                          // there are many ways to get this data using jQuery (you can use the class or id also)
+                                          fname = $('input[name=fname]').val();
+                                          lname = $('input[name=lname]').val();
+                                          address = $('input[name=address]').val();
+                                          city = $('input[name=city]').val();
+                                          state = $('input[name=state]').val();
+                                          pincode = $('input[name=pin]').val();
+                                          email = $('input[name=email]').val();
+                                          contact = $('input[name=contact]').val();
+                                          pswd = $('input[name=pswd]').val();
+                                          var formData = {
+                                              'first_name'            : fname,
+                                              'last_name'             : lname,
+                                              'address'               : address,
+                                              'city'                  : city,
+                                              'state'                 : state,
+                                              'pincode'               : pincode,
+                                              'email'                 : email,
+                                              'contact'               : contact,
+                                              'pswd'                  : pswd
+                                          };
+                                          //jQuery Post Method -- quick alt. to ajax
+                                          $.post('http://127.0.0.1:5000/cregister', formData)
+                                          .done(function(result, status, xhr) {                          //done promise callback
+                                              //success code
+                                              if(result.message){
+                                                alert(result.message);
+                                                window.location.href = "login--.html"; 
+                                              }            
+                                          })
+                                          .fail(function(result, status, xhr) {
+                                              //error code
+                                              alert("Sign Up Error !");
+                                              location.reload();
+                                          });    
+                },
+                errorClass: "form-error",
+                validClass: "form-success",
+                errorElement: "div",
+                ignore: [],
+                rules: {       
+                    avatar: {extension:"jpg|png|gif|jpeg|doc|docx|pdf|xls|rar|zip"},
+                    password2: {equalTo: '#password'},
+                    calcul: {operation: 12},
+                    url: {url: true},
+                    email: {
+                        required:  {
+                                depends:function(){
+                                    $(this).val($.trim($(this).val()));
+                                    return true;
+                                }   
+                            },
+                        customemail: true
+                    },
+                },
+                messages:{
+                    name: {required: 'Enter your name'},
+                    lastname: {required: 'Enter your last name'},
+                    firstname: {required: 'Enter your first name'},
+                    email: {required: 'Enter email address', customemail: 'Enter a valid email address'},
+                    language: {required: 'Enter your language'},
+                    mobile: {required: 'Enter your phone number'},
+                    avatar: {required: 'You must upload your avatar'},
+                    password: {required: 'Write your password'},
+                    password2: {required: 'Write your password',equalTo: '2 passwords must be the same'},
+                    calcul: {required: 'Enter the result of 4 + 8',operation: 'Result is false. Try again!'},
+                    terms: {required: 'You must agree with terms'}
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).closest('.form-control').addClass(errorClass).removeClass(validClass);
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).closest('.form-control').removeClass(errorClass).addClass(validClass);
+                },
+                errorPlacement: function(error, element) {
+                   if (element.hasClass("custom-file") || element.hasClass("checkbox-type") || element.hasClass("language")) {
+                        element.closest('.option-group').after(error);
+                   }
+                   else if (element.is(":radio") || element.is(":checkbox"))  {
+                        element.closest('.option-group').after(error);
+                   }
+                   else if (element.parent().hasClass('input-group'))  {
+                        element.parent().after(error);
+                   }
+                   else{
+                       error.insertAfter(element);
+                   }
+                },
+                invalidHandler: function(event, validator) {
+                    var errors = validator.numberOfInvalids();         
+                }      
+            });
+            $(".form-validation .cancel").click(function() {
+                formValidation.resetForm();
+            });
+        });
+    }               
+});
+    </script>
+</body>
+</html>
+<style>
+.vh-100 {
+    height: 100vh!important;
+}
+.vw-100 {
+    width: 100vw!important;
+}
+.align-items-center {
+    -ms-flex-align: center!important;
+    align-items: center!important;
+}
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.ml-auto, .mx-auto {
+    margin-left: auto!important;
+}
+.mr-auto, .mx-auto {
+    margin-right: auto!important;
+}
+
+.center {
+    top:15% !important;
+    left: 25%! important;
+}
+</style>

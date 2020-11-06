@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Dispur Wireless</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" 
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+          
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/AdminLanding.css">
+  </head>
+  <body>
+    <div class="row justify-content-end" style="padding-top:5px; padding-right: 20px; margin-right: 0px;" >
+      <button class="btn btn-primary" id="logout-btn">Logout</button> 
+      </div>
+    
+    <div class="wrapper-class">
+      <div class="title-text">
+        <h2 style="text-align: center;">Admin's Tariff Management Portal</h2>
+      </div>
+    <hr>
+    <br>
+   
+    <span style="align-content: center;">
+      <button class="btn btn-primary" id="add-tariff-btn">Add a Tariff</button>
+      <button class="btn btn-primary" id="search-tariff-btn">Search a Tariff</button>
+      <button class="btn btn-primary" id="update-tariff-btn">Update a Tariff</button>
+    </span>
+
+    <hr>
+    <br> 
+    <div class="title-text">
+      <h3 style="text-align: center;">Select & Delete Plans</h3>
+    </div>
+    <br>
+
+<br>
+        <table class="table table-hover table-bordered results table-striped text-center" style="border-color: var(--dark)" id="display-table">
+          <thead>
+          <tr>
+            <th>Tariff ID</th>
+            <th>Name</th>
+            <th>Tarrif_call</th>
+            <th>Tariff_data</th>
+            <th>Validity</th>
+            <th>Rental</th>
+            <th>Select</th>
+           
+        </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <th scope="row">1</th>
+              <td>Geet Plan</td>
+              <td>3p/Sec</td>
+              <td>1GB/day</td>
+              <td>28 days</td>
+              <td>300</td>
+              <td>
+                <input type="checkbox" id="plan-check" value="">
+              </td>
+            </tr>
+        </tbody>
+       
+      </table>
+    
+    <div class="row justify-content-end" style="padding-top:5px; padding-right: 20px;">
+<button class="btn btn-primary" id="delete-btn">Delete</button> 
+</div>
+<hr>
+    </div>
+
+  </div>
+
+
+  </body>
+</html>

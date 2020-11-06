@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+    <title>Dispur Wireless Ltd.
+    </title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="row align-items-center vh-100 vw-100">
+        <div class="col-sm- col-md-4 col-lg-4 mx-auto">
+            <h1 class="text-center pb-4">Dispur Wireless</h1>
+            <!-- OUR FORM -->
+            <form method="POST" class="needs-validation" novalidate>
+                <!-- NAME -->
+                <div id="id-group" class="form-group">
+                    <input type="text" id="id" class="form-control text-center" name="uid" placeholder="User Id" required>
+                    <!-- errors will go here -->
+                </div>
+                <!-- EMAIL -->
+                <div id="pswd-group" class="pb-2 form-group">
+                    <input type="text" id="pswd" class="form-control text-center" name="pswd" placeholder="Password" required>
+                    <!-- errors will go here -->
+                </div>
+                <div class="text-center">
+                    <div class="mb-3" style="font-size:0.8rem;"><a href="#">Forgot password ?</a></div>
+                    <button type="submit" class="btn" style="background-color: #7289da; color:#fff">Login <span class="fa fa-arrow-right"></span></button>
+                    <div class="mt-3" style="font-size:0.8rem;">
+                        Not a member ? <a href="#">Signup now</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+<script>
+$(document).ready(function() {
+    // process the form
+    $('form').submit(function(event) {
+        // stop the form from submitting the normal way and refreshing the page
+        event.preventDefault();
+        $('#id').removeClass('is-invalid');
+        $('#pswd').removeClass('is-invalid');
+        $( ".invalid-feedback" ).remove();
+        // get the form data
+        // there are many ways to get this data using jQuery (you can use the class or id also)
+        uid = $('input[name=uid]').val();
+        pswd = $('input[name=pswd]').val();
+        var form = document.getElementsByClassName('needs-validation')[0];
+        if(form.checkValidity() === false){
+            event.preventDefault();
+            event.stopPropagation();
+            form.classList.add('was-validated');
+        }
+        else{
+
+            var formData = {
+                'uid'              : uid,
+                'pswd'             : pswd,
+            };
+            //jQuery Post Method -- quick alt. to ajax
+            $.post('http://127.0.0.1:5000/login', formData)
+            .done(function(result, status, xhr) {                          //done promise callback
+                //success code
+                if(result.role){
+                    // user id and pswd match
+                    role = result.role.toString();
+                    sessionStorage.setItem('id', uid);
+                    if (role === '6')                                      // employee 
+                        window.location.href = "index.html";             
+                    if (role ===  '1')                                     // ISM
+                        window.location.href = "hr.html";
+                    if(role === '2')                                       // Relationship Manager
+                        window.location.href = "rm.html";
+                    if (role === '3')                                      // HR
+                        window.location.href = "ht.html";
+                    if(role === '4')                                       // Operator
+                        window.location.href = "operator.html";             
+                    if(role === '5')                                       //Admin
+                        window.location.href = "admin.html";
+                }
+                else{
+                    //user id and pswd don't match
+                    $('.needs-validation').removeClass('was-validated')
+                    $('#id-group').append('<div class="invalid-feedback" style="font-size:0.8rem;">User ID and password do not match</div>');
+                    $('#id').addClass('is-invalid');
+                    $('#pswd').addClass('is-invalid');
+                }
+            })
+            .fail(function(result, status, xhr) {
+                //error code
+                $('.needs-validation').removeClass('was-validated')
+                $('#id-group').append('<div class="invalid-feedback" style="font-size:0.8rem;">User ID does not exists. Sign Up!</div>');
+                $('#id').addClass('is-invalid');
+            });               
+        }
+    });
+});
+</script> 

@@ -45,6 +45,20 @@ class PlanModel():
             return tarrifPlans
         connection.close()
 
+    @classmethod
+    def find_all_not_subscribed(cls, cid):
+        tarrifPlans = list()
+        connection = db.connect(db_path)
+        cursor = connection.cursor()
+        query = DQL.select_all_plan_cid
+        result = cursor.execute(query, (cid,))
+        rows = result.fetchall()
+        if rows:
+            for row in rows:
+                tarrifPlans.append(PlanModel(row[0], row[1], row[2], row[3], row[4], row[5]))
+            return tarrifPlans
+        connection.close()   
+
     #3) Insert
     @classmethod
     def insert_into_table(cls, pid, name, tarrif_call, tarrif_data, validity, rental):

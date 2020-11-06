@@ -70,11 +70,17 @@ class UserLogin(Resource):
                             type=str,
                             required=True,
                             help='This field is required!')
-        data_payload = parser.parse_args()                   
-        role = UserModel.login(data_payload['uid'], data_payload['pswd'])
-        if role:
-            return{'role': role}, 200
-        return {'message': 'Login Error!'}, 500
+        data_payload = parser.parse_args()
+        exists = UserModel.find_by_id(data_payload['uid']) 
+        if exists:                  
+            role = UserModel.login(data_payload['uid'], data_payload['pswd'])
+            if role:
+                return {'role': role,
+                       'message':'login success'}, 200
+            else:
+                return {'role': None,
+                        'message': 'login error'}, 200
+        return {'message': 'login error'}, 500
 
 
 

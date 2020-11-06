@@ -149,14 +149,7 @@ class GenerateBill(Resource):
     
 # Bill : sid - customer portal
 class GetBillForSubscription(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('sid',
-                             type=str,
-                             required=True,
-                             help='This is required!')
-        data_payload = parser.parse_args()
-        sid = data_payload['sid']
+    def get(self, sid):
         bill = BillModel.find_by_sid(sid)
         if bill:
             return {'bill': bill.jsonify()}, 200
@@ -164,18 +157,11 @@ class GetBillForSubscription(Resource):
 
 # Bill : cid - customer portal
 class GetBillForCustomer(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('cid',
-                             type=str,
-                             required=True,
-                             help='This is required!')
-        data_payload = parser.parse_args()
-        cid = data_payload['cid']
+    def get(self, cid):
         bills = BillModel.find_by_cid(cid)
         if bills:
             return {'bills': [bill.jsonify() for bill in bills]}, 200
-        return {'message': 'The operator has not genereated any bills for you yet. Please check after billing cycle completion'}, 404
+        return {'bills': []}, 200
 # Usage Details : sid - operator portal
 class GetSubscriptionUsageDetails(Resource):
     def get(self, sid):
@@ -189,7 +175,7 @@ class GetAllSubscriptionUsageDetails(Resource):
         subs = SubscriptionBillModel.find_subs_by_cid(cid)
         if subs:
             return {'subscriptions': [sub.jsonify() for sub in subs]}, 200
-        return {'message': 'No subscriptions found for customer '+cid}, 404   
+        return {'subscriptions': []}, 200
 # Subscription Details : sid
 class GetSubscriptionDetails(Resource):
     def get(self, sid):
@@ -204,7 +190,7 @@ class MySubscriptionsDetailsList(Resource):
         subs = CustomerSubscriptionModel.find_subs_by_cid(cid)
         if subs:
             return {'subscriptions': [sub.jsonify() for sub in subs]}, 200
-        return {'message': 'No subscriptions found. Please subscribe to new plans!'}, 404     
+        return {'subscriptions': []}, 200  
 
 # Pay Bill : sid
 class PayBill(Resource):

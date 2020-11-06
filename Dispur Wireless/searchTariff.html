@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Dispur Wireless</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" 
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/RM.css">
+  </head>
+  <body>
+      <div class="row justify-content-end" style="padding-top:5px; padding-right: 20px; margin-right: 0px;">
+        <button class="btn btn-primary" id="logout-btn">Logout</button> 
+        </div>
+    <div class="wrapper-class">
+      <div class="title-text">
+        <div class="title-class">View Tariff</div>
+      </div>
+      <hr>
+      <div class="field" style="text-align: center;">
+        <input type="text" placeholder="Tariff ID" required id="id-input">
+      </div>
+
+      
+      <div class="row justify-content-center" style="padding-top:5px; padding-right: 20px; margin-right: 0px;">
+        <button class="btn btn-primary" id="search-btn">Search Tariff</button> 
+      </div>
+        <br>
+        <hr>
+      <table class="table table-hover table-bordered results table-striped text-center" style="border-color: var(--dark)" id="display-table">
+        <thead>
+          <tr>
+            <th>Tariff ID</th>
+            <th>Tariff Name</th>
+            <th>Tariff Voice</th>
+            <th>Tariff Data</th>
+            <th>Validity</th>
+            <th>Rental</th>
+        </tr>
+         
+        </thead>
+        <tbody>
+          
+          <tr>
+            <th scope="row">R1234</th>
+            <td>Dispur Fiber Pro</td>
+            <td>Rs 1/min</td>
+            <td>Rs 10/GB</td>
+            <td>28 days</td>
+            <td>199</td>
+          </tr>
+          
+          
+        </tbody>
+      </table>
+    </div>
+
+    <!-- <script>
+      const loginText = document.querySelector(".title-text .login");
+      const loginForm = document.querySelector("form.login");
+      const loginBtn = document.querySelector("label.login");
+      const signupBtn = document.querySelector("label.signup");
+      const signupLink = document.querySelector("form .signup-link a");
+      signupBtn.onclick = (()=>{
+        loginForm.style.marginLeft = "-50%";
+        loginText.style.marginLeft = "-50%";
+      });
+      loginBtn.onclick = (()=>{
+        loginForm.style.marginLeft = "0%";
+        loginText.style.marginLeft = "0%";
+      });
+      signupLink.onclick = (()=>{
+        signupBtn.click();
+        return false;
+      });
+    </script> -->
+
+
+
+  </body>
+</html>

@@ -256,10 +256,8 @@ class SubscriptionBillModel():
         if rows:
             for row in rows:
                 subscription_details_sid = SubscriptionBillModel(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16])
-        else:
-            print("No Data Fetched for given sid")
-        connection.close()
-        return subscription_details_sid 
+            connection.close()
+            return subscription_details_sid 
     
     #3) Select by cid
     @classmethod

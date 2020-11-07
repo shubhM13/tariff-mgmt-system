@@ -105,7 +105,7 @@ class PlanModel():
         cursor = connection.cursor()
         query = DML.update_plan_by_id
         try:
-            result = cursor.execute(query, (pid, name, tarrif_call, tarrif_data, validity, rental))
+            result = cursor.execute(query, (name, tarrif_call, tarrif_data, validity, rental, pid))
             connection.commit()
             connection.close()
             return True

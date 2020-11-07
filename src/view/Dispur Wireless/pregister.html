@@ -17,7 +17,7 @@
   <!-- BEGIN BODY -->
   <body class="color-purple">
           <!-- BEGIN TOPBAR -->
-        <div class="topbar">
+        <div class="topbar" style="min-height:5vh !important;">
           <div class="header-left">
           <span style="padding: 1%; font-size:15px;"><b>Tarrif Management Portal</b></span>
           </div>
@@ -59,9 +59,9 @@
           <!-- header-right -->
         </div>
         <!-- END TOPBAR -->
-        <div class="align-items-center vh-100 vw-100">
-            <div class="col-md-6 mx-auto center">
-                <h1 class="text-center" style="font-size:4rem;padding-bottom:20px;">Dispur Wireless</h1>
+        <div class="align-items-center vh-85">
+            <div class="col-md-6 center">
+                <h1 class="text-center" style="font-size:4rem;padding:5%">Dispur Wireless</h1>
               <div class="panel panel-default no-bd">
                 <div class="panel-header bg-dark" style="padding: 3%;">
                   <h2 class="panel-title" style="font-size:20px"><strong>Tarrif Plan</strong></h2>
@@ -75,7 +75,7 @@
                             <div class="form-group">
                               <label class="control-label">Plan Name</label>
                               <div class="append-icon">
-                                <input type="text" name="pname" class="form-control" placeholder="Minimum 3 characters..." required>
+                                <input type="text" name="pname" class="form-control" placeholder="Minimum 3 characters..." minlength="3">
                                 <i class="icon-tag"></i>
                               </div>
                             </div>
@@ -134,15 +134,14 @@
               </div>
             </div>
         </div>
-      <footer class="py-5 bg-dark">
+      <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+      <footer class="py-5 bg-dark vh-10">
       <div class="container">
-        <p class="m-0 text-center text-white">
+        <p class="text-center text-white" style="position:relative; margin-top:25px !important;">
           Copyright &copy; <a href="https://github.com/tango97" style="text-decoration:none"><i class="fa fa-github"></i> tango97</a>
         </p>
       </div>
-      <!-- /.container -->
     </footer>
-    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
     <script src="../assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
     <script src="../assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
     <script src="../assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
@@ -170,7 +169,7 @@
     <script src="../assets/admin/md-layout1/material-design/js/material.js"></script>
     <script src="../assets/admin/layout1/js/layout.js"></script>
     <script>
-      //$.material.init();
+    $.material.init();
     $(document).ready(function() {
               uid = sessionStorage.getItem('id');
         document.getElementById('logged-user').innerHTML = 'Hi, '+uid
@@ -221,34 +220,6 @@
                 validClass: "form-success",
                 errorElement: "div",
                 ignore: [],
-                rules: {       
-                    avatar: {extension:"jpg|png|gif|jpeg|doc|docx|pdf|xls|rar|zip"},
-                    password2: {equalTo: '#password'},
-                    calcul: {operation: 12},
-                    url: {url: true},
-                    email: {
-                        required:  {
-                                depends:function(){
-                                    $(this).val($.trim($(this).val()));
-                                    return true;
-                                }   
-                            },
-                        customemail: true
-                    },
-                },
-                messages:{
-                    name: {required: 'Enter your name'},
-                    lastname: {required: 'Enter your last name'},
-                    firstname: {required: 'Enter your first name'},
-                    email: {required: 'Enter email address', customemail: 'Enter a valid email address'},
-                    language: {required: 'Enter your language'},
-                    mobile: {required: 'Enter your phone number'},
-                    avatar: {required: 'You must upload your avatar'},
-                    password: {required: 'Write your password'},
-                    password2: {required: 'Write your password',equalTo: '2 passwords must be the same'},
-                    calcul: {required: 'Enter the result of 4 + 8',operation: 'Result is false. Try again!'},
-                    terms: {required: 'You must agree with terms'}
-                },
                 highlight: function(element, errorClass, validClass) {
                     $(element).closest('.form-control').addClass(errorClass).removeClass(validClass);
                 },
@@ -279,15 +250,18 @@
         });
     }               
 });
-    </script>
+</script>
 </body>
 </html>
 <style>
-.vh-100 {
-    height: 100vh!important;
+.vh-85 {
+    min-height: 85vh!important;
 }
-.vw-100 {
-    width: 100vw!important;
+.vh-90 {
+    min-height: 90vh!important;
+}
+.vh-10 {
+    min-height: 10vh!important;
 }
 .align-items-center {
     -ms-flex-align: center!important;

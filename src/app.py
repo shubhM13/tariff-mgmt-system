@@ -7,7 +7,7 @@ from flask_cors import CORS
 from resources.user import User, UserList, UserRegister, UserLogin
 from resources.customer import Customer, CustomerList, CustomerRegister, CustomerUpdate
 from resources.employee import Employee, EmployeeList, EmployeeRegister, EmployeeUpdate
-from resources.plan import Plan, PlanList, PlanRegister
+from resources.plan import Plan, PlanList, PlanListAll, PlanRegister, PlanUpdate
 from resources.role import Role, RoleList
 from resources.usage import UsageRegister
 from resources.subs_billing import Subscription, SubscriptionList, SubscriptionRegister, SubscriptionUpdate, GenerateBill, GetBillForSubscription, GetBillForCustomer, MySubscriptionsDetailsList, GetAllSubscriptionUsageDetails, GetSubscriptionDetails, GetSubscriptionDetails, GetSubscriptionUsageDetails, PayBill
@@ -43,7 +43,9 @@ api.add_resource(EmployeeUpdate, '/eupdate')
 
 api.add_resource(Plan, '/plan/<string:pid>')
 api.add_resource(PlanList, '/plans/<string:cid>')
+api.add_resource(PlanListAll, '/plans')
 api.add_resource(PlanRegister, '/pregister')
+api.add_resource(PlanUpdate, '/pupdate')
 
 
 api.add_resource(Role, '/role/<string:rid>')

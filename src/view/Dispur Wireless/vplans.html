@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from themes-lab.com/make/admin/md-layout1/tables-editable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Nov 2020 00:03:54 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <title>View</title>
+    <!-- BEGIN PAGE STYLE -->
+    <link href="../assets/global/plugins/datatables/dataTables.min.css" rel="stylesheet">
+    <!-- END PAGE STYLE -->
+    <link href="../assets/global/css/style.css" rel="stylesheet">
+    <link href="../assets/global/css/theme.css" rel="stylesheet">
+    <link href="../assets/global/css/ui.css" rel="stylesheet">
+    <link href="../assets/admin/md-layout1/material-design/css/material.css" rel="stylesheet">
+    <link href="../assets/admin/md-layout1/css/layout.css" rel="stylesheet">
+    <script src="../assets/global/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js" integrity="sha512-2AL/VEauKkZqQU9BHgnv48OhXcJPx9vdzxN1JrKDVc4FPU/MEE/BZ6d9l0mP7VmvLsjtYwqiYQpDskK9dG8KBA==" crossorigin="anonymous"></script>
+  </head>
+  <!-- BEGIN BODY -->
+  <body class="theme-sdtl color-purple">
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+      <!-- BEGIN TOPBAR -->
+      <div class="topbar">
+          <div class="header-left">
+          <span style="padding: 1%; font-size:15px;"><b>Tarrif Management Portal</b></span>
+          </div>
+          <div class="header-right">
+            <ul class="header-menu nav navbar-nav">
+              <!-- BEGIN USER DROPDOWN -->
+              <li class="dropdown" id="language-header">
+                <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                <i class="fa fa-table" aria-hidden="true"><b> View Plans</b></i>
+                </a>
+              </li>
+              <!-- END USER DROPDOWN -->
+              <!-- BEGIN NOTIFICATION DROPDOWN -->
+              <li class="dropdown" id="notifications-header">
+                <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                <i class="fa fa-plus-circle" aria-hidden="true"><span> Add Usage</span></i>
+                </a>
+              </li>
+              <!-- END NOTIFICATION DROPDOWN -->
+              <!-- BEGIN USER DROPDOWN -->
+              <li class="dropdown" id="user-header">
+                <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                <img src="../assets/global/images/avatars/user1.png" alt="user image">
+                <span class="username" id="logged-user">Hi, John Doe</span>
+                </a>
+              </li>
+              <!-- END USER DROPDOWN -->
+              <!-- CHAT BAR ICON -->
+              <li id="quickview-toggle"><a href="login--.html"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+            </ul>
+          </div>
+          <!-- header-right -->
+      </div>
+      <!-- END TOPBAR -->
+    <section>
+      <div class="main-content mx-auto"style="margin-left:0px; margin-right:0px;">
+        <!-- BEGIN PAGE CONTENT -->
+        <div class="page-content">
+          <div class="row">
+            <div class="col-lg-12 portlets">
+              <div class="panel">
+                <div class="panel-header">
+                  <h3><i class="fa fa-table"></i> <strong>All Tarrif Plans</strong></h3>
+                </div>
+                <div class="panel-content">
+                  <p>Here you can manage tarri plans easily: add new plan, edit or remove existing plan. You can export your table in PDF, Excel, CSV or just copy it to clipboard.</p>
+                  <div class="m-b-20">
+                    <div class="btn-group">
+                      <button id="table-edit_new" class="btn btn-sm btn-dark"><i class="fa fa-plus"></i> Add New Line</button>
+                    </div>
+                  </div>
+                  <div class="filter-left">
+                    <table class="table table-hover dataTable table-tools" id="table-editable">
+                    <thead>
+                      <tr>
+                        <th>Plan ID</th>
+                        <th>Plan Name</th>
+                        <th>Cost (Rs)</th>
+                        <th>Call Tarrif (Paise/sec)</th>
+                        <th>Data Tarrif (Paise/kb)</th>
+                        <th class="text-right">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Smith</td>
+                        <td>John</td>
+                        <td>435</td>
+                        <td>super Admin</td>
+                        <td class="text-right"><a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>  <a class="delete btn btn-sm btn-danger" href="javascript:;"><i class="icons-office-52"></i></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END MAIN CONTENT -->
+    </section>
+
+    <!-- BEGIN PRELOADER -->
+    <div class="loader-overlay">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+    <!-- END PRELOADER -->
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
+    <script src="../assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+    <script src="../assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../assets/global/plugins/tether/js/tether.min.js"></script>
+    <script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/global/plugins/appear/jquery.appear.js"></script>
+    <script src="../assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script> <!-- Jquery Cookies, for theme -->
+    <script src="../assets/global/plugins/jquery-block-ui/jquery.blockUI.min.js"></script> <!-- simulate synchronous behavior when using AJAX -->
+    <script src="../assets/global/plugins/bootbox/bootbox.min.js"></script> <!-- Modal with Validation -->
+    <script src="../assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script> <!-- Custom Scrollbar sidebar -->
+    <script src="../assets/global/plugins/bootstrap-dropdown/bootstrap-hover-dropdown.min.js"></script> <!-- Show Dropdown on Mouseover -->
+    <script src="../assets/global/plugins/select2/dist/js/select2.full.min.js"></script> <!-- Select Inputs -->
+    <script src="../assets/global/plugins/icheck/icheck.min.js"></script> <!-- Checkbox & Radio Inputs -->
+    <script src="../assets/global/plugins/backstretch/backstretch.min.js"></script> <!-- Background Image -->
+    <script src="../assets/global/js/builder.js"></script> <!-- Theme Builder -->
+    <script src="../assets/global/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
+    <script src="../assets/global/js/application.js"></script> <!-- Main Application Script -->
+    <script src="../assets/global/js/plugins.js"></script> <!-- Main Plugin Initialization Script -->
+    <script src="../assets/global/js/pages/search.js"></script> <!-- Search Script -->
+    <!-- BEGIN PAGE SCRIPTS -->
+    <script src="../assets/global/plugins/datatables/jquery.dataTables.min.js"></script> <!-- Tables Filtering, Sorting & Editing -->
+    <script src="../assets/global/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="../assets/admin/md-layout1/material-design/js/material.js"></script>
+    <script src="../assets/admin/layout1/js/layout.js"></script>
+    <script>
+      $.material.init();
+    </script>
+  </body>
+</html>
+<script>
+var viewModel
+$( document ).ready(function() {
+  var id = sessionStorage.getItem('id');
+  $.ajax({
+      type: "GET",
+      url: "http://127.0.0.1:5000/plans",
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function(result){
+          viewModel = {
+            plans : result.plans,
+            empty : result.plans.length == 0,
+            notEmpty: result.plans.length != 0,
+            unsubscribe : function(){
+                            pid = this.planID
+                            console.log(pid)
+                            var id = sessionStorage.getItem('id');
+                            sid = id+pid
+                              $.ajax({
+                                type: "DELETE",
+                                url: "http://127.0.0.1:5000/unsubscribe/"+sid,
+                                success: function(result){
+                                    alert("Succesfully Unubscribed")
+                                    location.reload();
+                                },
+                                error: function(error){
+                                  alert("Error Unubscribing!")
+                                }
+                            });
+            }
+          }
+          console.log(viewModel)
+          ko.applyBindings(viewModel);
+      },
+      error: function(error){
+        console.log(error);
+      }
+  });
+});
+$(function () {
+
+    function editableTable() {
+
+        function restoreRow(oTable, nRow) {
+            var aData = oTable.fnGetData(nRow);
+            var jqTds = $('>td', nRow);
+
+            for (var i = 0, iLen = jqTds.length; i < iLen; i++) {
+                oTable.fnUpdate(aData[i], nRow, i, false);
+            }
+            oTable.fnDraw();
+        }
+
+        function editRow(oTable, nRow) {
+            var aData = oTable.fnGetData(nRow);
+            var jqTds = $('>td', nRow);
+            jqTds[0].innerHTML = '<input type="text" class="form-control small" value="' + aData[0] + '">';
+            jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '">';
+            jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[2] + '">';
+            jqTds[3].innerHTML = '<input type="text" class="form-control small" value="' + aData[3] + '">';
+            jqTds[4].innerHTML = '<div class="text-right"><a class="edit btn btn-sm btn-success" href="">Save</a> <a class="delete btn btn-sm btn-danger" href=""><i class="icons-office-52"></i></a></div>';
+        }
+
+        function saveRow(oTable, nRow) {
+            var jqInputs = $('input', nRow);
+            oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+            oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
+            oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
+            oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
+            oTable.fnUpdate('<div class="text-right"><a class="edit btn btn-sm btn-default" href=""><i class="icon-note"></i></a> <a class="delete btn btn-sm btn-danger" href=""><i class="icons-office-52"></i></a></div>', nRow, 4, false);
+            oTable.fnDraw();
+        }
+
+        function cancelEditRow(oTable, nRow) {
+            var jqInputs = $('input', nRow);
+            oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+            oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
+            oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
+            oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
+            oTable.fnUpdate('<a class="edit btn btn-sm btn-default" href=""><i class="icon-note"></i></a>', nRow, 4, false);
+            oTable.fnDraw();
+        }
+
+        var oTable = $('#table-editable').dataTable({
+            buttons: {
+                buttons: [
+                            {
+                                extend: 'excelHtml5',
+                                title: $(this).data('table-name') || "Your custom name",
+                                className: 'btn btn-default'
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                title: $(this).data('table-name') || "Your custom name",
+                                className: 'btn btn-default'
+                            },
+                            {
+                                extend: 'csvHtml5',
+                                title: $(this).data('table-name') || "Your custom name",
+                                className: 'btn btn-default'
+                            },
+                            {
+                                extend: 'copyHtml5',
+                                className: 'btn btn-default'
+                            }
+                          ]
+            },
+            "aLengthMenu": [
+                [5, 15, 20, -1],
+                [5, 15, 20, "All"] // change per page values here
+            ],
+            "sDom" : "<'row'<'col-md-6'f><'col-md-6'B>r>t<'row'<'col-md-6'i><'spcol-md-6an6'p>>",
+            // set the initial value
+            "iDisplayLength": 10,
+            "bPaginate": false,
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ records per page",
+                "oPaginate": {
+                    "sPrevious": "Prev",
+                    "sNext": "Next"
+                },
+                "sSearch": "" 
+            },
+            "aoColumnDefs": [{
+                    'bSortable': false,
+                    'aTargets': [0]
+                }
+            ]
+        });
+
+        jQuery('#table-edit_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
+        jQuery('#table-edit_wrapper .dataTables_length select').addClass("form-control xsmall"); // modify table per page dropdown
+
+        var nEditing = null;
+
+        $('#table-edit_new').click(function (e) {
+            e.preventDefault();
+            var aiNew = oTable.fnAddData(['', '', '', '',
+                    '<p class="text-center"><a class="edit btn btn-dark" href=""><i class="fa fa-pencil-square-o"></i>Edit</a> <a class="delete btn btn-danger" href=""><i class="fa fa-times-circle"></i> Remove</a></p>'
+            ]);
+            var nRow = oTable.fnGetNodes(aiNew[0]);
+            editRow(oTable, nRow);
+            nEditing = nRow;
+        });
+
+        $('#table-editable').on('click', 'a.delete', function (e) {
+            e.preventDefault();
+            if (confirm("Are you sure to delete this row ?") == false) {
+                return;
+            }
+            var nRow = $(this).parents('tr')[0];
+            oTable.fnDeleteRow(nRow);
+            // alert("Deleted! Do not forget to do some ajax to sync with backend :)");
+        });
+
+        $('#table-editable').on('click', 'a.cancel', function (e) {
+            e.preventDefault();
+            if ($(this).attr("data-mode") == "new") {
+                var nRow = $(this).parents('tr')[0];
+                oTable.fnDeleteRow(nRow);
+            } else {
+                restoreRow(oTable, nEditing);
+                nEditing = null;
+            }
+        });
+
+        $('#table-editable').on('click', ' a.edit', function (e) {
+            e.preventDefault();
+            /* Get the row as a parent of the link that was clicked on */
+            var nRow = $(this).parents('tr')[0];
+
+            if (nEditing !== null && nEditing != nRow) {
+                restoreRow(oTable, nEditing);
+                editRow(oTable, nRow);
+                nEditing = nRow;
+            } else if (nEditing == nRow && this.innerHTML == "Save") {
+                 /* This row is being edited and should be saved */
+                saveRow(oTable, nEditing);
+                nEditing = null;
+                // alert("Updated! Do not forget to do some ajax to sync with backend :)");
+            } else {
+                 /* No row currently being edited */
+                editRow(oTable, nRow);
+                nEditing = nRow;
+            }
+        });
+
+        $('.dataTables_filter input').attr("placeholder", "Search a user...");
+
+    };
+
+    editableTable();
+});
+</script>

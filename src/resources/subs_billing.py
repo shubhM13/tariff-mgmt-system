@@ -12,13 +12,19 @@ class Subscription(Resource):
         if subscription:
             return {'subscription': subscription.jsonify()}, 200
         return {'message': 'Subscription not found!'}, 404
-    
+    #unsubscribe
     def delete(self, sid):
-        subscription = SubscriptionModel.delete_subscription(sid)
-        bill = BillModel.delete_bill_sid(sid)
-        if subscription and bill:
-            return {'message': 'Subscription {0} was successfully deleted from database!'.format(sid)}, 200
-        return {'message': 'Error in deleting the subscription!'}, 500
+        can_delete = SubscriptionModel.can_delete(sid)
+        if can_delete:
+            subscription = SubscriptionModel.delete_subscription(sid)
+            bill = BillModel.delete_bill_sid(sid)
+            if subscription and bill:
+                return {'message': 'You have successfully unsubscribed to the plan {0}'.format(str(sid[-5:])),
+                        'can_delete': True}, 200
+            return {'message': 'Error in deleting the subscription!'}, 500
+        else:
+            return {'message': 'You can only unsubscribe 90 days post subscription.',
+                    'can_delete': False}, 200
 
 #unused
 class SubscriptionList(Resource):

@@ -59,19 +59,22 @@ class EmployeeRegister(Resource):
                             help='This field is required!') 
 
         data_payload = parser.parse_args()
-        status_user_insert = UserModel.insert_into_table(eid,
-                                    data_payload['pswd'],
-                                    data_payload['role_id'])                              # role_id : 6 -- Employee
-        status_employee_insert = EmployeeModel.insert_into_table(eid,
-                                    data_payload['first_name'],
-                                    data_payload['last_name'],
-                                    data_payload['role_id'],
-                                    data_payload['email'],
-                                    data_payload['contact'])
-        if status_user_insert and status_employee_insert:
-            return {'message': 'Employee successfully added to the database!'}, 201
+        if EmployeeModel.find_by_id(eid):
+            return {'message': 'Employee with the same eid alredy exists. Please try again!'}, 400
         else:
-            return {'message': 'Error inserting the employee!'}, 500
+            status_user_insert = UserModel.insert_into_table(eid,
+                                        data_payload['pswd'],
+                                        data_payload['role_id'])                              # role_id : 6 -- Employee
+            status_employee_insert = EmployeeModel.insert_into_table(eid,
+                                        data_payload['first_name'],
+                                        data_payload['last_name'],
+                                        data_payload['role_id'],
+                                        data_payload['email'],
+                                        data_payload['contact'])
+            if status_user_insert and status_employee_insert:
+                return {'message': 'Employee {0} successfully added to the database!'.format(eid)}, 201
+            else:
+                return {'message': 'Error inserting the employee!'}, 500
 
 class EmployeeUpdate(Resource):
 
@@ -89,10 +92,6 @@ class EmployeeUpdate(Resource):
                             type=str,
                             required=True,
                             help='This field is required!') 
-        parser.add_argument('role_id',
-                            type=int,
-                            required=True,
-                            help='This field is required!') 
         parser.add_argument('email',
                             type=str,
                             required=True,
@@ -103,17 +102,44 @@ class EmployeeUpdate(Resource):
                             help='This field is required!') 
 
         data_payload = parser.parse_args()
-
-        status = EmployeeModel.update_employee(data_payload['first_name'],
-                                    data_payload['last_name'],
-                                    data_payload['role_id'],
-                                    data_payload['email'],
-                                    data_payload['contact']
-                                    ,data_payload['eid'])
-        if status:
-            return {'message': 'Employee data successfully updated in the database!'}, 201
+        if EmployeeModel.find_by_id(data_payload['eid']).eid != data_payload['eid']:
+            return {'message': 'Employee with id {0} does not exist.'.format(data_payload['eid'])}, 400
         else:
-            return {'message': 'Error updating the employee data!'}, 500
+            status = EmployeeModel.update_employee(data_payload['first_name'],
+                                        data_payload['last_name'],
+                                        data_payload['email'],
+                                        data_payload['contact']
+                                        ,data_payload['eid'])
+            if status:
+                return {'message': 'Employee {0} successfully updated in the database!'.format(data_payload['eid'])}, 201
+            else:
+                return {'message': 'Error updating the employee data!'}, 500
+
+class RoleUpdate(Resource):
+
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('eid',
+                            type=str,
+                            required=True,
+                            help='This field is required!')        
+        parser.add_argument('role_id',
+                            type=int,
+                            required=True,
+                            help='This field is required!')
+
+        data_payload = parser.parse_args()
+        if EmployeeModel.find_by_id(data_payload['eid']).eid != data_payload['eid']:
+            return {'message': 'Employee with id {0} does not exist.'.format(data_payload['eid'])}, 400
+        else:
+            statusE = EmployeeModel.update_role(data_payload['eid'],
+                                        data_payload['role_id'])
+            statusU = UserModel.update_role(data_payload['eid'],
+                                        data_payload['role_id'])
+            if statusE and statusU:
+                return {'message': 'Employee {0} successfully updated in the database!'.format(data_payload['eid'])}, 201
+            else:
+                return {'message': 'Error updating the employee role!'}, 500
 
 
         

@@ -100,7 +100,7 @@ class PlanModel():
     
     #5) Update
     @classmethod
-    def update_plan(cls, pid, name, tarrif_call, tarrif_data, validity, rental):
+    def update_plan(cls, name, tarrif_call, tarrif_data, validity, rental, pid):
         connection = db.connect(db_path)
         cursor = connection.cursor()
         query = DML.update_plan_by_id

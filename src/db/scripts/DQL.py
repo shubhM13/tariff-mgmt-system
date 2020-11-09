@@ -3,7 +3,8 @@
 # 1) user table
 select_user_by_id = "SELECT * FROM user WHERE uid=?"
 select_all_users = "SELECT * FROM user"
-login = "SELECT role_id FROM user WHERE uid=? AND pswd=?"
+login = """SELECT u.role_id, c.first_name FROM user u INNER JOIN customer c ON u.uid = c.cid WHERE u.uid=? AND u.pswd=? 
+        UNION SELECT u.role_id, e.first_name FROM user u INNER JOIN employee e ON u.uid = e.eid WHERE u.uid=? AND u.pswd=?"""
 # 2) customer table
 select_cust_by_id = "SELECT * FROM customer WHERE cid=?"
 select_all_cust = "SELECT * FROM customer"
@@ -28,6 +29,13 @@ select_all_subs = "SELECT * FROM subscription"
 select_plan_by_id = "SELECT * FROM tarrif_plan WHERE pid=?"
 select_all_plan = "SELECT * FROM tarrif_plan"
 select_all_plan_cid = "SELECT * FROM tarrif_plan WHERE pid NOT IN (SELECT pid FROM subscription WHERE cid = ?)"
+can_delete = """SELECT CASE 
+                        WHEN (julianday('now') - julianday(s.subs_date) >= 90)
+                                THEN CAST(1 AS BIT)
+                        ELSE CAST(0 AS BIT)
+                        END
+        FROM subscription s
+        WHERE sid=?"""
 
 
 # 7) usage table

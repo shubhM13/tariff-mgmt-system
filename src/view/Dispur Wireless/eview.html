@@ -47,36 +47,31 @@
     <!-- BEGIN TOPBAR -->
     <div class="topbar" style="min-height: 5vh !important; z-index: 300">
       <div class="header-left">
-        <span style="padding: 1%; font-size: 15px"
-          ><b>Tarrif Management Portal</b></span
-        >
+        <span style="padding: 1%; font-size: 15px"><b>HR Portal</b></span>
       </div>
       <div class="header-right">
         <ul class="header-menu nav navbar-nav">
           <!-- BEGIN USER DROPDOWN -->
           <li class="dropdown" id="language-header">
             <a href="#" style="cursor: pointer">
-              <i class="fa fa-table" aria-hidden="true"><b> View Plans</b></i>
+              <i class="fa fa-table" aria-hidden="true"
+                ><b> View Employees</b></i
+              >
             </a>
           </li>
           <!-- END USER DROPDOWN -->
           <!-- BEGIN NOTIFICATION DROPDOWN -->
           <li class="dropdown" id="notifications-header">
-            <a href="pregister.html" style="cursor: pointer">
+            <a href="eregister.html" style="cursor: pointer">
               <i class="fa fa-plus-circle" aria-hidden="true"
-                ><span> Add Plan</span></i
+                ><span> Add Employee</span></i
               >
             </a>
           </li>
           <!-- END NOTIFICATION DROPDOWN -->
           <!-- BEGIN USER DROPDOWN -->
           <li class="dropdown" id="user-header">
-            <a
-              href="#"
-              data-toggle="dropdown"
-              data-hover="dropdown"
-              data-close-others="true"
-            >
+            <a style="cursor: pointer">
               <img
                 src="../assets/global/images/avatars/user1.png"
                 alt="user image"
@@ -112,22 +107,16 @@
                 <div class="panel-header">
                   <h3>
                     <i class="fa fa-table"></i>
-                    <strong>All Tarrif Plans</strong>
+                    <strong>All Employees</strong>
                   </h3>
                 </div>
                 <div class="panel-content">
                   <p>
-                    Here you can manage tarrif plans easily: add new plan, edit
-                    or remove existing plan. You can also export your table in
-                    PDF, Excel, CSV or just copy it to clipboard.
+                    Here you can manage employees easily: edit employee (except
+                    role, only ISM can change roles) or remove existing
+                    employee. You can also export your table in PDF, Excel, CSV
+                    or just copy it to clipboard.
                   </p>
-                  <div class="m-b-20">
-                    <div class="btn-group">
-                      <button id="table-edit_new" class="btn btn-sm btn-dark">
-                        <i class="fa fa-plus"></i> Add New Plan
-                      </button>
-                    </div>
-                  </div>
                   <div class="filter-left">
                     <table
                       class="table table-hover dataTable table-tools"
@@ -136,22 +125,22 @@
                       <thead>
                         <tr>
                           <th>ID</th>
-                          <th>Plan Name</th>
-                          <th>Cost (Rs)</th>
-                          <th>Call Tarrif (P/s)</th>
-                          <th>Data Tarrif (P/kb)</th>
-                          <th>Validity (days)</th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Role</th>
+                          <th>Email</th>
+                          <th>Contact</th>
                           <th class="text-right">Action</th>
                         </tr>
                       </thead>
-                      <tbody data-bind="foreach: viewModel.plans">
+                      <tbody data-bind="foreach: viewModel.employees">
                         <tr>
-                          <td data-bind="text: planID"></td>
-                          <td data-bind="text: planName"></td>
-                          <td data-bind="text: rental"></td>
-                          <td data-bind="text: callTarrif"></td>
-                          <td data-bind="text: dataTarrif"></td>
-                          <td data-bind="text: validity"></td>
+                          <td data-bind="text: empID"></td>
+                          <td data-bind="text: empFirstName"></td>
+                          <td data-bind="text: empLastName"></td>
+                          <td data-bind="text: empRoleID"></td>
+                          <td data-bind="text: empEmail"></td>
+                          <td data-bind="text: empContact"></td>
                           <td class="text-right">
                             <a
                               class="edit btn btn-sm btn-default"
@@ -265,20 +254,21 @@
       document.getElementById("logged-user").innerHTML = "Hi, " + name;
       $.ajax({
         type: "GET",
-        url: "http://127.0.0.1:5000/plans",
+        url: "http://127.0.0.1:5000/employees",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
           viewModel = {
-            plans: result.plans,
-            empty: result.plans.length == 0,
-            notEmpty: result.plans.length != 0,
+            employees: result.employees,
+            empty: result.employees.length == 0,
+            notEmpty: result.employees.length != 0,
             delete: function () {
-              pid = this.planID;
-              console.log(pid);
+              console.log(this);
+              eid = this.empID;
+              console.log(eid);
               $.ajax({
                 type: "DELETE",
-                url: "http://127.0.0.1:5000/plan/" + pid,
+                url: "http://127.0.0.1:5000/employee/" + eid,
                 success: function (result) {
                   alert("Succesfully Deleted");
                 },
@@ -308,23 +298,19 @@
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $(">td", nRow);
                 jqTds[1].innerHTML =
-                  '<input type="text" name="pname" class="form-control small" placeholder="min. length 3" minlength="3" value="' +
+                  '<input type="text" name="fname" class="form-control small" placeholder="Minimum 3 characters" minlength="3" value="' +
                   aData[1] +
                   '" required>';
                 jqTds[2].innerHTML =
-                  '<input type="number" step="0.01" name="cost" placeholder="base cost(Rs)" class="form-control small" value="' +
+                  '<input type="text" name="lname"  minlength="4" placeholder="Minimum 4 characters..." class="form-control small" value="' +
                   aData[2] +
                   '" required>';
-                jqTds[3].innerHTML =
-                  '<input type="number" step="0.01" name="tarrifCall" placeholder="call tarrif(p/s)" class="form-control small" value="' +
-                  aData[3] +
-                  '"required>';
                 jqTds[4].innerHTML =
-                  '<input type="number" step="0.01" name="tarrifDall" placeholder="data tarrif(p/kb)" class="form-control small" value="' +
+                  '<input  type="email" name="email" placeholder="Enter email..." class="form-control small" value="' +
                   aData[4] +
                   '"required>';
                 jqTds[5].innerHTML =
-                  '<input type="number" name="validity" placeholder="validity(days)" class="form-control small" value="' +
+                  '<input type="text" name="contact" placeholder="Mobile Number .." class="form-control small" value="' +
                   aData[5] +
                   '"required>';
                 jqTds[6].innerHTML =
@@ -347,36 +333,30 @@
                 if (invalid) {
                   return false;
                 }
-                var planData = {
-                  pid: aData[0],
-                  name: jqInputs[0].value,
-                  tarrif_call: jqInputs[2].value,
-                  tarrif_data: jqInputs[3].value,
-                  validity: jqInputs[4].value,
-                  rental: jqInputs[1].value,
+                var employeeData = {
+                  eid: aData[0],
+                  first_name: jqInputs[0].value,
+                  last_name: jqInputs[1].value,
+                  email: jqInputs[2].value,
+                  contact: jqInputs[3].value,
                 };
-                if (planData.pid === "")
-                  url = "http://127.0.0.1:5000/pregister";
-                else url = "http://127.0.0.1:5000/pupdate";
+                url = "http://127.0.0.1:5000/eupdate";
 
-                $.post(url, planData)
+                $.post(url, employeeData)
                   .done(function (result, status, xhr) {
                     //done promise callback
                     //success code
                     if (result.message) {
                       oTable.fnUpdate(jqInputs[0].value, nRow, 1, false);
                       oTable.fnUpdate(jqInputs[1].value, nRow, 2, false);
-                      oTable.fnUpdate(jqInputs[2].value, nRow, 3, false);
-                      oTable.fnUpdate(jqInputs[3].value, nRow, 4, false);
-                      oTable.fnUpdate(jqInputs[4].value, nRow, 5, false);
+                      oTable.fnUpdate(jqInputs[2].value, nRow, 4, false);
+                      oTable.fnUpdate(jqInputs[3].value, nRow, 5, false);
                       oTable.fnUpdate(
                         '<div class="text-right"><a class="edit btn btn-sm btn-default" href=""><i class="icon-note"></i> Edit</a> <a class="delete btn btn-sm btn-danger" data-bind="click:viewModel.delete" href=""><i class="icons-office-52"></i> Delete</a></div>',
                         nRow,
                         6,
                         false
                       );
-                      if (result.planID)
-                        oTable.fnUpdate(result.planID, nRow, 0, false);
                       oTable.fnDraw();
                       alert(result.message);
                     }
@@ -411,17 +391,17 @@
                   buttons: [
                     {
                       extend: "excelHtml5",
-                      title: "Tarrif Plans",
+                      title: "Employees",
                       className: "btn btn-default",
                     },
                     {
                       extend: "pdfHtml5",
-                      title: "Tarrif Plans",
+                      title: "Employees",
                       className: "btn btn-default",
                     },
                     {
                       extend: "csvHtml5",
-                      title: "Tarrif Plans",
+                      title: "Employees",
                       className: "btn btn-default",
                     },
                     {
@@ -526,7 +506,7 @@
 
               $(".dataTables_filter input").attr(
                 "placeholder",
-                "Search Plan"
+                "Search Employee"
               );
             }
 

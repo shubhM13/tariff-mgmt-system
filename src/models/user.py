@@ -110,13 +110,37 @@ class UserModel():
         connection = db.connect(db_path)
         cursor = connection.cursor()
         query = DQL.login
-        result = cursor.execute(query, (uid, pswd))
-        role = result.fetchall()
+        result = cursor.execute(query, (uid, pswd, uid, pswd))
+        rows = result.fetchall()
         connection.close()
-        if role:
-            return role
+        if rows:
+            d = dict()
+            for row in rows:
+                d['role'] = row[0]
+                d['name'] = row[1]
+            return d
 
-    #7) jsonify the model
+    #7) Update Role
+    @classmethod
+    def update_role(cls, uid, role_id):
+        connection = db.connect(db_path)
+        cursor = connection.cursor()
+        query = DML.update_user_role
+        try:
+            result = cursor.execute(query, (role_id, uid))
+            connection.commit()
+            connection.close()
+            return True
+        except db.Error as er:
+            print('SQLite error: %s' % (' '.join(er.args)))
+            print("Exception class is: ", er.__class__)
+            print('SQLite traceback: ')
+            exc_type, exc_value, exc_tb = sys.exc_info()
+            print(traceback.format_exception(exc_type, exc_value, exc_tb))
+            connection.close()
+            return False
+
+    #8) jsonify the model
     def jsonify(self):
         return{
             'id': self.uid,

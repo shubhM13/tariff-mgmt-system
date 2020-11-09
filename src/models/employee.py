@@ -88,12 +88,12 @@ class EmployeeModel():
     
     #5) Update
     @classmethod
-    def update_employee(cls, eid, first_name, last_name, role_id, email, contact):
+    def update_employee(cls, first_name, last_name, email, contact, eid):
         connection = db.connect(db_path)
         cursor = connection.cursor()
         query = DML.update_emp_by_id
         try:
-            result = cursor.execute(query, (eid, first_name, last_name, role_id, email, contact))
+            result = cursor.execute(query, (first_name, last_name, email, contact, eid))
             connection.commit()
             connection.close()
             return True
@@ -106,7 +106,27 @@ class EmployeeModel():
             connection.close()
             return False
     
-    #6) jsonify the model
+    #6) Update Role
+    @classmethod
+    def update_role(cls, eid, role_id):
+        connection = db.connect(db_path)
+        cursor = connection.cursor()
+        query = DML.update_emp_role
+        try:
+            result = cursor.execute(query, (role_id, eid))
+            connection.commit()
+            connection.close()
+            return True
+        except db.Error as er:
+            print('SQLite error: %s' % (' '.join(er.args)))
+            print("Exception class is: ", er.__class__)
+            print('SQLite traceback: ')
+            exc_type, exc_value, exc_tb = sys.exc_info()
+            print(traceback.format_exception(exc_type, exc_value, exc_tb))
+            connection.close()
+            return False
+    
+    #7) jsonify the model
     def jsonify(self):
         return{
             'empID': self.eid,

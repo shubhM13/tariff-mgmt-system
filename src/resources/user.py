@@ -73,12 +73,14 @@ class UserLogin(Resource):
         data_payload = parser.parse_args()
         exists = UserModel.find_by_id(data_payload['uid']) 
         if exists:                  
-            role = UserModel.login(data_payload['uid'], data_payload['pswd'])
-            if role:
-                return {'role': role,
+            user = UserModel.login(data_payload['uid'], data_payload['pswd'])
+            if user:
+                return {'role': user['role'],
+                        'name': user['name'],
                        'message':'login success'}, 200
             else:
                 return {'role': None,
+                        'name': None,
                         'message': 'login error'}, 200
         return {'message': 'login error'}, 500
 

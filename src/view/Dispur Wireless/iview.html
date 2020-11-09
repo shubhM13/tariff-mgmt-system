@@ -13,7 +13,7 @@
     />
     <meta name="description" content="admin-themes-lab" />
     <meta name="author" content="themes-lab" />
-    <title>View</title>
+    <title>View roles</title>
     <!-- BEGIN PAGE STYLE -->
     <link
       href="../assets/global/plugins/datatables/dataTables.min.css"
@@ -48,7 +48,7 @@
     <div class="topbar" style="min-height: 5vh !important; z-index: 300">
       <div class="header-left">
         <span style="padding: 1%; font-size: 15px"
-          ><b>Tarrif Management Portal</b></span
+          ><b>Role Management Portal</b></span
         >
       </div>
       <div class="header-right">
@@ -56,27 +56,15 @@
           <!-- BEGIN USER DROPDOWN -->
           <li class="dropdown" id="language-header">
             <a href="#" style="cursor: pointer">
-              <i class="fa fa-table" aria-hidden="true"><b> View Plans</b></i>
-            </a>
-          </li>
-          <!-- END USER DROPDOWN -->
-          <!-- BEGIN NOTIFICATION DROPDOWN -->
-          <li class="dropdown" id="notifications-header">
-            <a href="pregister.html" style="cursor: pointer">
-              <i class="fa fa-plus-circle" aria-hidden="true"
-                ><span> Add Plan</span></i
+              <i class="fa fa-table" aria-hidden="true"
+                ><b> View Employees</b></i
               >
             </a>
           </li>
-          <!-- END NOTIFICATION DROPDOWN -->
+          <!-- END USER DROPDOWN -->
           <!-- BEGIN USER DROPDOWN -->
           <li class="dropdown" id="user-header">
-            <a
-              href="#"
-              data-toggle="dropdown"
-              data-hover="dropdown"
-              data-close-others="true"
-            >
+            <a style="cursor: pointer">
               <img
                 src="../assets/global/images/avatars/user1.png"
                 alt="user image"
@@ -112,22 +100,15 @@
                 <div class="panel-header">
                   <h3>
                     <i class="fa fa-table"></i>
-                    <strong>All Tarrif Plans</strong>
+                    <strong>All Employees</strong>
                   </h3>
                 </div>
                 <div class="panel-content">
                   <p>
-                    Here you can manage tarrif plans easily: add new plan, edit
-                    or remove existing plan. You can also export your table in
-                    PDF, Excel, CSV or just copy it to clipboard.
+                    Here you can manage employee roles easily. You can also
+                    export your table in PDF, Excel, CSV or just copy it to
+                    clipboard.
                   </p>
-                  <div class="m-b-20">
-                    <div class="btn-group">
-                      <button id="table-edit_new" class="btn btn-sm btn-dark">
-                        <i class="fa fa-plus"></i> Add New Plan
-                      </button>
-                    </div>
-                  </div>
                   <div class="filter-left">
                     <table
                       class="table table-hover dataTable table-tools"
@@ -136,34 +117,32 @@
                       <thead>
                         <tr>
                           <th>ID</th>
-                          <th>Plan Name</th>
-                          <th>Cost (Rs)</th>
-                          <th>Call Tarrif (P/s)</th>
-                          <th>Data Tarrif (P/kb)</th>
-                          <th>Validity (days)</th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Role</th>
+                          <th>Email</th>
+                          <th>Contact</th>
                           <th class="text-right">Action</th>
                         </tr>
                       </thead>
-                      <tbody data-bind="foreach: viewModel.plans">
+                      <tbody data-bind="foreach: viewModel.employees">
                         <tr>
-                          <td data-bind="text: planID"></td>
-                          <td data-bind="text: planName"></td>
-                          <td data-bind="text: rental"></td>
-                          <td data-bind="text: callTarrif"></td>
-                          <td data-bind="text: dataTarrif"></td>
-                          <td data-bind="text: validity"></td>
+                          <td data-bind="text: empID"></td>
+                          <td data-bind="text: empFirstName"></td>
+                          <td data-bind="text: empLastName"></td>
+                          <td data-bind="text: viewModel.role(empRoleID)"></td>
+                          <input
+                            type="hidden"
+                            data-bind="attr: { 'id': empID, value: empRoleID}"
+                          />
+                          <td data-bind="text: empEmail"></td>
+                          <td data-bind="text: empContact"></td>
                           <td class="text-right">
                             <a
                               class="edit btn btn-sm btn-default"
                               href="javascript:;"
-                              ><i class="icon-note"></i
-                            > Edit</a>
-                            <a
-                              class="delete btn btn-sm btn-danger"
-                              data-bind="click:viewModel.delete"
-                              href="javascript:;"
-                              ><i class="icons-office-52"></i
-                            > Delete</a>
+                              ><i class="icon-note"></i> Edit Role</a
+                            >
                           </td>
                         </tr>
                       </tbody>
@@ -265,28 +244,31 @@
       document.getElementById("logged-user").innerHTML = "Hi, " + name;
       $.ajax({
         type: "GET",
-        url: "http://127.0.0.1:5000/plans",
+        url: "http://127.0.0.1:5000/employees",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
           viewModel = {
-            plans: result.plans,
-            empty: result.plans.length == 0,
-            notEmpty: result.plans.length != 0,
-            delete: function () {
-              pid = this.planID;
-              console.log(pid);
-              $.ajax({
-                type: "DELETE",
-                url: "http://127.0.0.1:5000/plan/" + pid,
-                success: function (result) {
-                  alert("Succesfully Deleted");
-                },
-                error: function (error) {
-                  alert("Error Deleting!");
-                  window.location.reload();
-                },
-              });
+            employees: result.employees,
+            empty: result.employees.length == 0,
+            notEmpty: result.employees.length != 0,
+            role: function (role) {
+              role = role.toString();
+              if (role === "1")
+                // ISM
+                return "ISM";
+              if (role === "2")
+                // Relationship Manager
+                return "Relationship Manager";
+              if (role === "3")
+                // HR
+                return "HR";
+              if (role === "4")
+                // Operator
+                return "Operator";
+              if (role === "5")
+                //Admin
+                return "Admin";
             },
           };
           console.log(viewModel);
@@ -306,36 +288,32 @@
 
               function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
+                empId = aData[0];
+                selectedOption = (
+                  parseInt(document.getElementById(empId).value) - 1
+                ).toString();
                 var jqTds = $(">td", nRow);
-                jqTds[1].innerHTML =
-                  '<input type="text" name="pname" class="form-control small" placeholder="min. length 3" minlength="3" value="' +
-                  aData[1] +
-                  '" required>';
-                jqTds[2].innerHTML =
-                  '<input type="number" step="0.01" name="cost" placeholder="base cost(Rs)" class="form-control small" value="' +
-                  aData[2] +
-                  '" required>';
                 jqTds[3].innerHTML =
-                  '<input type="number" step="0.01" name="tarrifCall" placeholder="call tarrif(p/s)" class="form-control small" value="' +
-                  aData[3] +
-                  '"required>';
-                jqTds[4].innerHTML =
-                  '<input type="number" step="0.01" name="tarrifDall" placeholder="data tarrif(p/kb)" class="form-control small" value="' +
-                  aData[4] +
-                  '"required>';
-                jqTds[5].innerHTML =
-                  '<input type="number" name="validity" placeholder="validity(days)" class="form-control small" value="' +
-                  aData[5] +
-                  '"required>';
+                  '<select id="roleSelect"name="role" required>' +
+                  '<option value="1">ISM</option>' +
+                  '<option value="2">Relationship Manager</option>' +
+                  '<option value="3">HR</option>' +
+                  '<option value="4">Operator</option>' +
+                  '<option value="5">Admin</option>' +
+                  "</select>";
+                $("#roleSelect option:eq(" + selectedOption + ")").prop(
+                  "selected",
+                  true
+                );
                 jqTds[6].innerHTML =
-                  '<div class="text-right"><a class="edit btn btn-sm btn-success" href="">Save</a> <a class="delete btn btn-sm btn-danger" href=""><i class="icons-office-52"></i> Delete</a></div>';
+                  '<div class="text-right"><a class="edit btn btn-sm btn-success" href="">Save</a></div>';
               }
 
               function saveRow(oTable, nRow) {
                 var invalid = false;
                 var aData = oTable.fnGetData(nRow);
-                var jqInputs = $("input", nRow);
-                jqInputs.each(function (index, target) {
+                var jqSelects = $("select", nRow);
+                jqSelects.each(function (index, target) {
                   if (!target.checkValidity()) {
                     $(this).css("border", "2px solid red");
                     target.focus();
@@ -347,36 +325,31 @@
                 if (invalid) {
                   return false;
                 }
-                var planData = {
-                  pid: aData[0],
-                  name: jqInputs[0].value,
-                  tarrif_call: jqInputs[2].value,
-                  tarrif_data: jqInputs[3].value,
-                  validity: jqInputs[4].value,
-                  rental: jqInputs[1].value,
+                var employeeData = {
+                  eid: aData[0],
+                  role_id: parseInt(jqSelects[0].value),
                 };
-                if (planData.pid === "")
-                  url = "http://127.0.0.1:5000/pregister";
-                else url = "http://127.0.0.1:5000/pupdate";
+                url = "http://127.0.0.1:5000/rupdate";
 
-                $.post(url, planData)
+                $.post(url, employeeData)
                   .done(function (result, status, xhr) {
                     //done promise callback
                     //success code
                     if (result.message) {
-                      oTable.fnUpdate(jqInputs[0].value, nRow, 1, false);
-                      oTable.fnUpdate(jqInputs[1].value, nRow, 2, false);
-                      oTable.fnUpdate(jqInputs[2].value, nRow, 3, false);
-                      oTable.fnUpdate(jqInputs[3].value, nRow, 4, false);
-                      oTable.fnUpdate(jqInputs[4].value, nRow, 5, false);
+                      document.getElementById(employeeData.eid).value =
+                        jqSelects[0].value;
                       oTable.fnUpdate(
-                        '<div class="text-right"><a class="edit btn btn-sm btn-default" href=""><i class="icon-note"></i> Edit</a> <a class="delete btn btn-sm btn-danger" data-bind="click:viewModel.delete" href=""><i class="icons-office-52"></i> Delete</a></div>',
+                        $("#roleSelect option:selected").text(),
+                        nRow,
+                        3,
+                        false
+                      );
+                      oTable.fnUpdate(
+                        '<div class="text-right"><a class="edit btn btn-sm btn-default" href=""><i class="icon-note"></i>Edit Role</a></div>',
                         nRow,
                         6,
                         false
                       );
-                      if (result.planID)
-                        oTable.fnUpdate(result.planID, nRow, 0, false);
                       oTable.fnDraw();
                       alert(result.message);
                     }
@@ -397,7 +370,7 @@
                 oTable.fnUpdate(jqInputs[4].value, nRow, 4, false);
                 oTable.fnUpdate(jqInputs[5].value, nRow, 5, false);
                 oTable.fnUpdate(
-                  '<a class="edit btn btn-sm btn-default" href=""><i class="icon-note"></i> Edit</a>',
+                  '<a class="edit btn btn-sm btn-default" href=""><i class="icon-note"></i></a>',
                   nRow,
                   6,
                   false
@@ -411,17 +384,17 @@
                   buttons: [
                     {
                       extend: "excelHtml5",
-                      title: "Tarrif Plans",
+                      title: "Employees",
                       className: "btn btn-default",
                     },
                     {
                       extend: "pdfHtml5",
-                      title: "Tarrif Plans",
+                      title: "Employees",
                       className: "btn btn-default",
                     },
                     {
                       extend: "csvHtml5",
-                      title: "Tarrif Plans",
+                      title: "Employees",
                       className: "btn btn-default",
                     },
                     {
@@ -472,7 +445,7 @@
                   "",
                   "",
                   "",
-                  '<p class="text-center"><a class="edit btn btn-dark" href=""><i class="fa fa-pencil-square-o"></i> Edit</a> <a class="delete btn btn-danger" href=""><i class="fa fa-times-circle"></i> Remove</a></p>',
+                  '<p class="text-center"><a class="edit btn btn-dark" href=""><i class="fa fa-pencil-square-o"></i>Edit</a> <a class="delete btn btn-danger" href=""><i class="fa fa-times-circle"></i> Remove</a></p>',
                 ]);
                 var nRow = oTable.fnGetNodes(aiNew[0]);
                 editRow(oTable, nRow);
@@ -526,7 +499,7 @@
 
               $(".dataTables_filter input").attr(
                 "placeholder",
-                "Search Plan"
+                "Search Employee"
               );
             }
 

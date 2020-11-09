@@ -56,7 +56,7 @@ class PlanRegister(Resource):
                             required=True,
                             help='This field is required!') 
         parser.add_argument('rental',
-                            type=str,
+                            type=float,
                             required=False)
 
         data_payload = parser.parse_args()
@@ -71,7 +71,8 @@ class PlanRegister(Resource):
                                         data_payload['validity'],
                                         data_payload['rental'])
             if status:
-                return {'message': 'Tarrif Plan successfully added to the database!'}, 201
+                return {'message': 'Tarrif Plan {0} successfully added!'.format(pid),
+                        'planID': pid}, 201
             else:
                 return {'message': 'Error inserting the tarrif plan!'}, 500
 
@@ -100,12 +101,13 @@ class PlanUpdate(Resource):
                             required=True,
                             help='This field is required!') 
         parser.add_argument('rental',
-                            type=str,
-                            required=False)
+                            type=float,
+                            required=True,
+                            help='This field is required!')
 
         data_payload = parser.parse_args()
 
-        status = PlanModel.insert_into_table(
+        status = PlanModel.update_plan(
                                     data_payload['name'],
                                     data_payload['tarrif_call'],
                                     data_payload['tarrif_data'],
@@ -113,7 +115,7 @@ class PlanUpdate(Resource):
                                     data_payload['rental'],
                                     data_payload['pid'])
         if status:
-            return {'message': 'Tarrif Plan successfully added to the database!'}, 201
+            return {'message': 'Tarrif Plan {0} successfully updated!'.format(data_payload['pid'])}, 201
         else:
             return {'message': 'Error inserting the tarrif plan!'}, 500
 

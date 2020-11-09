@@ -2,6 +2,7 @@
 insert_user = "INSERT INTO user VALUES (?,?,?,?)"
 update_user_by_id = "UPDATE user SET pswd=?, datetime=?, role_id=? WHERE uid=?"
 delete_user_by_id = "DELETE FROM user WHERE uid=?"
+update_user_role = "UPDATE user SET role_id=? WHERE uid=?"
 
 
 # 2) Customer table
@@ -12,7 +13,8 @@ delete_cust_by_id = "DELETE FROM customer WHERE cid=?"
 
 # 3) Employee table
 insert_emp = "INSERT INTO employee VALUES (?,?,?,?,?,?)"
-update_emp_by_id = "UPDATE employee SET first_name=?,last_name=?,role_id=?,email=?,contact=? WHERE eid=?"
+update_emp_by_id = "UPDATE employee SET first_name=?,last_name=?,email=?,contact=? WHERE eid=?"
+update_emp_role = "UPDATE employee SET role_id=? WHERE eid=?"
 delete_emp_by_id = "DELETE FROM employee WHERE eid=?"
 
 

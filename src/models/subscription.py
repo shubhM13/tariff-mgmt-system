@@ -124,8 +124,20 @@ class SubscriptionModel():
             connection.close()
             return False
 
-    
-    #7) jsonify the model
+    #7) can delete ?
+    @classmethod
+    def can_delete(self, sid):
+        connection = db.connect(db_path)
+        cursor = connection.cursor()
+        query = DQL.can_delete
+        result = cursor.execute(query, (sid,))
+        row = result.fetchall()
+        if row == 1:
+            return True
+        else:
+            return False
+
+    #8) jsonify the model
     def jsonify(self):
         return{
             'subID': self.sid,

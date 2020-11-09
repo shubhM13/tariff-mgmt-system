@@ -6,7 +6,7 @@ from flask_cors import CORS
 
 from resources.user import User, UserList, UserRegister, UserLogin
 from resources.customer import Customer, CustomerList, CustomerRegister, CustomerUpdate
-from resources.employee import Employee, EmployeeList, EmployeeRegister, EmployeeUpdate
+from resources.employee import Employee, EmployeeList, EmployeeRegister, EmployeeUpdate, RoleUpdate
 from resources.plan import Plan, PlanList, PlanListAll, PlanRegister, PlanUpdate
 from resources.role import Role, RoleList
 from resources.usage import UsageRegister
@@ -37,8 +37,9 @@ api.add_resource(Employee, '/employee/<string:eid>')
 api.add_resource(EmployeeList, '/employees')
 #works
 api.add_resource(EmployeeRegister, '/eregister')
-#works - check non existent
+#works 
 api.add_resource(EmployeeUpdate, '/eupdate')
+api.add_resource(RoleUpdate, '/rupdate')
 
 
 api.add_resource(Plan, '/plan/<string:pid>')

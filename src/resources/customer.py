@@ -25,7 +25,7 @@ class CustomerList(Resource):
     def get(self):
         customers = CustomerModel.find_all()
         if customers:
-            return {'message': [customer.jsonify() for customer in customers]}, 200
+            return {'customers': [customer.jsonify() for customer in customers]}, 200
         return {'message': 'No customers found!'}, 404
 
 class CustomerRegister(Resource):

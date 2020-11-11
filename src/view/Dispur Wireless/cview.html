@@ -255,17 +255,23 @@
             empty: result.customers.length == 0,
             notEmpty: result.customers.length != 0,
             viewSubs: function () {
-              console.log(this);
+              console.log(this.customerID);
               cid = this.customerID;
               console.log(cid);
               $.ajax({
-                type: "DELETE",
+                type: "GET",
                 url: "http://127.0.0.1:5000/getSubscriptionList/" + cid,
                 success: function (result) {
-                  if(result.)
+                  if(result.subscriptions.length != 0){
+                    localStorage.setItem('cid', this.customerID)
+                    window.location.href = sview.html;
+                  }
+                  else{
+                    alert("The customer "+this.customerID+" hasn't subscribed to any plans.");
+                  }
                 },
                 error: function (error) {
-                  alert("Error Deleting!");
+                  alert("Error fetching the subscriptions!");
                   window.location.reload();
                 },
               });

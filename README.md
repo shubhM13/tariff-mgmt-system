@@ -1,4 +1,4 @@
-# Customer-Connection-Management-Portal
+# Tariff Management System
 
 A full-stack web applciation for Tarrif Management of a Telecom Provider.
 - *Architecture* - REST
